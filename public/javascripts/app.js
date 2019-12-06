@@ -32,8 +32,8 @@ app.controller('dashboardController', function($scope, $http) {
 
 // Controller for the Tinder page
 app.controller('tinderController', function($scope, $http) {
-  $scope.tinder = {};
-
+  //$scope.tinder = {};
+  console.log("HELLO???");
   $http({
     url: '/tinder',
     method: 'GET'

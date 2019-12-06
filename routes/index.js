@@ -19,6 +19,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/tinder', function(req, res) {
+  console.log("tinder");
   res.sendFile(path.join(__dirname, '../', 'views', 'tinder.html'));
 });
 
@@ -85,6 +86,29 @@ router.get('/genres/:genre', function (req, res) {
   });
 });
 
+
+router.get('/tinder', function(req, res) {
+  console.log("start of tinder");
+  var query = `SELECT *
+    FROM (SELECT s.photo, sd.breed_1, sd.breed_2, sd.color_1, sd.color_2,
+    (akc.height_low_inches + akc.height_high_inches)/2 AS avg_height, (akc.weight_low_lbs + akc.weight_high_lbs)/2 AS avg_weight
+    FROM stanford s
+    JOIN stanford_breeds sb ON s.breed = sb.breed
+    JOIN akc on akc.id = sb.id
+    JOIN aspca_breeds ab ON ab.id = sb.id
+    JOIN shelter_dogs sd ON ab.breed_name = sd.breed 
+    ORDER BY RAND()) AS T
+    LIMIT 1;`;
+
+  console.log("hello router");
+  connection.query(query, function (err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
 
 
 /* ----- Q2 (Recommendations) ----- */
