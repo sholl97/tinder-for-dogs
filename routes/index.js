@@ -88,17 +88,16 @@ router.get('/genres/:genre', function (req, res) {
 router.get('/recommendations/:movie', function (req, res) {
   var inputMovie = req.params.movie;
   // TODO: Part (2) - Edit query below
-  var query = `WITH all_gen as (SELECT genre
-FROM Genres
-where movie_id =(SELECT id from Movies where title='${inputMovie}'))
-SELECT title, id, rating, vote_count FROM Movies
-LEFT JOIN Genres ON id=movie_id
-LEFT JOIN all_gen ON Genres.genre = all_gen.genre
-WHERE title <> '${inputMovie}'
-GROUP BY title, id, rating, vote_count
-HAVING COUNT(all_gen.genre) >= ALL (SELECT COUNT(genre) FROM all_gen)
-ORDER BY rating DESC, vote_count DESC
-LIMIT 5;`;
+  var query = `SELECT *
+FROM (SELECT s.photo, sd.breed_1, sd.breed_2, sd.color_1, sd.color_2,
+(akc.height_low_inches + akc.height_high_inches)/2 AS avg_height, (akc.weight_low_lbs + akc.weight_high_lbs)/2 AS avg_weight
+FROM stanford s
+JOIN stanford_breeds sb ON s.breed = sb.breed
+JOIN akc on akc.id = sb.id
+JOIN aspca_breeds ab ON ab.id = sb.id
+JOIN shelter_dogs sd ON ab.breed_name = sd.breed 
+ORDER BY RAND()) AS T
+LIMIT 1;`;
 
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
