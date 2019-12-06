@@ -30,7 +30,7 @@ app.controller('dashboardController', function($scope, $http) {
   };
 });
 
-/*/ Controller for the Recommendations Page
+// Controller for the Recommendations Page
 app.controller('recommendationsController', function($scope, $http) {
 
   $scope.submitIds = function () {
@@ -46,7 +46,7 @@ app.controller('recommendationsController', function($scope, $http) {
   }
 });
 
-// Controller for the Best Of Page
+/*/ Controller for the Best Of Page
 app.controller('bestofController', function($scope, $http) {
 
   $http({

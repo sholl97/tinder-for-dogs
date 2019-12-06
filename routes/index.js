@@ -85,7 +85,7 @@ router.get('/genres/:genre', function (req, res) {
 
 /* ----- Q2 (Recommendations) ----- */
 
-/*router.get('/recommendations/:movie', function (req, res) {
+router.get('/recommendations/:movie', function (req, res) {
   var inputMovie = req.params.movie;
   // TODO: Part (2) - Edit query below
   var query = `WITH all_gen as (SELECT genre
@@ -110,7 +110,7 @@ LIMIT 5;`;
 });
 
 
------ Q3 (Best Of Decades) -----
+/*----- Q3 (Best Of Decades) -----
 
 router.get('/decades', function(req, res) {
   var query = `
