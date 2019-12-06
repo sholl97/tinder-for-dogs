@@ -54,7 +54,7 @@ router.get('<PATH>', function(req, res) {
 /* ------------------------------------------------ */
 
 /* ----- Q1 (Dashboard) ----- */
-router.get('/genres', function(req, res) {
+router.get('/dogs', function(req, res) {
   var query = 'SELECT breed FROM akc LIMIT 10;'
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);

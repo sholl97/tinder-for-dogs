@@ -1,4 +1,4 @@
-.genres-container {
+.dogs-container {
   /* margin: 10px 0; */
   display: flex;
   flex-flow: row wrap;
@@ -6,7 +6,7 @@
   /* border-bottom: 1px solid #ddd; */
 }
 
-.genres-container .genre {
+.dogs-container .dog {
   flex: 1 0 20%;
   margin: 5px 0;
   padding: 10px;
@@ -14,7 +14,7 @@
   box-sizing: border-box;
 }
 
-.genres-container .genre:hover {
+.dogs-container .dog:hover {
   background-color: #ddd;
 }
 
