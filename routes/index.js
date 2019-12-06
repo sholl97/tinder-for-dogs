@@ -18,6 +18,10 @@ router.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'dashboard.html'));
 });
 
+router.get('/tinder', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'tinder.html'));
+});
+
 /* ----- Q2 (Recommendations) ----- */
 router.get('/recommendations', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'recommendations.html'));
