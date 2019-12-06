@@ -119,13 +119,13 @@ app.controller('postersController', function($scope, $http) {
     })
   } */
 
-  $scope.hoverIn = (id) => {
-    console.log("hoverIn");
-    $scope.showDetails[id] = true;
-  }
+//   $scope.hoverIn = (id) => {
+//     console.log("hoverIn");
+//     $scope.showDetails[id] = true;
+//   }
 
-  $scope.hoverOut = (id) => {
-    console.log("hoverOut");
-    $scope.showDetails[id] = false;
-  }
-});
+//   $scope.hoverOut = (id) => {
+//     console.log("hoverOut");
+//     $scope.showDetails[id] = false;
+//   }
+// });
