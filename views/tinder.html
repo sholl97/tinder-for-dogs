@@ -36,8 +36,8 @@
         <div class="h5">Top Movies</div>
         <!-- Display the Genres -->
         <div class="dogs-container">
-          <div class="dog" id="{{'button-' + tinder.photo}}">
-            {{tinder.photo}}
+          <div class="dog" ng-repeat="d in tinder">
+            {{d.photo}}
           </div>
         </div>
       </div>
