@@ -54,8 +54,11 @@ router.get('<PATH>', function(req, res) {
 /* ------------------------------------------------ */
 
 /* ----- Q1 (Dashboard) ----- */
-router.get('/genres', function(req, res) {
-  var query = 'SELECT breed FROM AKC LIMIT 10;'
+router.get('/dogs', function(req, res) {
+  var query = `SELECT s.photo
+    FROM stanford s
+    ORDER BY RAND()
+    LIMIT 6;`;
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
     else {
