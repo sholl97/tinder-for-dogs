@@ -35,7 +35,7 @@ app.controller('tinderController', function($scope, $http) {
   //$scope.tinder = {};
   console.log("HELLO???");
   $http({
-    url: '/tinder',
+    url: '/:tinder',
     method: 'GET'
   }).then(res => {
     console.log("First Dog: ", res.data);

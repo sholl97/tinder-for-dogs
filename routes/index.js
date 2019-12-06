@@ -87,7 +87,7 @@ router.get('/genres/:genre', function (req, res) {
 });
 
 
-router.get('/tinder', function(req, res) {
+router.get('/:tinder', function(req, res) {
   console.log("start of tinder");
   var query = `SELECT *
     FROM (SELECT s.photo, sd.breed_1, sd.breed_2, sd.color_1, sd.color_2,
@@ -96,7 +96,7 @@ router.get('/tinder', function(req, res) {
     JOIN stanford_breeds sb ON s.breed = sb.breed
     JOIN akc on akc.id = sb.id
     JOIN aspca_breeds ab ON ab.id = sb.id
-    JOIN shelter_dogs sd ON ab.breed_name = sd.breed 
+    JOIN shelter_dogs sd ON ab.breed_name = sd.breed
     ORDER BY RAND()) AS T
     LIMIT 1;`;
 
