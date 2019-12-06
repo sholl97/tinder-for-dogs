@@ -30,6 +30,21 @@ app.controller('dashboardController', function($scope, $http) {
   };
 });
 
+// Controller for the Tinder page
+app.controller('tinderController', function($scope, $http) {
+  $scope.tinder = {};
+
+  $http({
+    url: '/tinder',
+    method: 'GET'
+  }).then(res => {
+    console.log("First Dog: ", res.data);
+    $scope.tinder = res.data;
+  }, err => {
+    console.log("First Dog ERROR: ", err);
+  });
+});
+
 /*/ Controller for the Recommendations Page
 app.controller('recommendationsController', function($scope, $http) {
 
