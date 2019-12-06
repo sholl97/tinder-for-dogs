@@ -37,7 +37,8 @@
         <!-- Display the Genres -->
         <div class="dogs-container">
           <div class="dog" ng-repeat="d in tinder">
-            {{d.photo}}
+            <img src="https://www.seas.upenn.edu/~hosa/cis550/{{d.photo}}" alt="{{d.breed_1}}">
+            <p>{{d.breed_1}}</p>
           </div>
         </div>
       </div>
