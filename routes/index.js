@@ -1,25 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-//var config = require('../db-config.js');
+var config = require('../db-config.js');
 
 /* ----- Connects to your mySQL database ----- */
 
-// var mysql = require('mysql');
-// config.connectionLimit = 10;
-// var connection = mysql.createPool(config);
-// console.log('Connected to the MySQL server.');
+var mysql = require('mysql');
 
-/* ----- Connect to SQLPLUS ----- */
-const oracledb = require('oracledb');
-
-oracledb.getConnection(
-    {
-      user: "admin",
-      password: "Penny415",
-      connectString: "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=cis550.cxib87hgdpcg.us-east-1.rds.amazonaws.com)(PORT=1521))(CONNECT_DATA=(SID=penny)))"
-    },
-  );
+config.connectionLimit = 10;
+var connection = mysql.createPool(config);
 
 /* ------------------------------------------- */
 /* ----- Routers to handle FILE requests ----- */
@@ -65,9 +54,8 @@ router.get('<PATH>', function(req, res) {
 /* ------------------------------------------------ */
 
 /* ----- Q1 (Dashboard) ----- */
-//Genre bank
-router.get('/genres', function (req, res) {
-  var query = 'SELECT DISTINCT breed FROM Stanford_Breeds';
+router.get('/genres', function(req, res) {
+  var query = 'SELECT breed FROM AKC LIMIT 10;'
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
     else {
@@ -77,12 +65,9 @@ router.get('/genres', function (req, res) {
   });
 });
 
-//Top movie list
 router.get('/genres/:genre', function (req, res) {
-  var clickedGenre = req.params.genre;
-
-  var query = `SELECT breed FROM Stanford_Breeds
-  WHERE breed LIKE '${clickedGenre}';`;
+  var inputGenre = req.params.genre;
+  var query = `;`
 
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
@@ -92,26 +77,25 @@ router.get('/genres/:genre', function (req, res) {
     }
   });
 });
+
 
 
 /* ----- Q2 (Recommendations) ----- */
-router.get('/recommendations/:movie', function (req, res) {
-  var inputMovie = req.params.movie;
 
-  var query = `WITH GenreList AS (
-    SELECT g.genre
-    FROM Genres g
-    WHERE g.movie_id = (SELECT m.id fROM Movies m WHERE m.title = '${inputMovie}')
-    )
-  SELECT m.title, m.id, m.rating, m.vote_count
-  From Movies m
-  LEFT OUTER JOIN Genres g ON m.id = g.movie_id
-  LEFT OUTER JOIN GenreList gl ON g.genre = gl.genre
-  WHERE m.title <> '${inputMovie}'
-  GROUP BY m.title, m.id, m.rating, m.vote_count
-  HAVING COUNT(gl.genre) >= ALL (SELECT COUNT(*) FROM GenreList)
-  ORDER BY m.rating DESC, m.vote_count DESC
-  LIMIT 5;`;
+/*router.get('/recommendations/:movie', function (req, res) {
+  var inputMovie = req.params.movie;
+  // TODO: Part (2) - Edit query below
+  var query = `WITH all_gen as (SELECT genre
+FROM Genres
+where movie_id =(SELECT id from Movies where title='${inputMovie}'))
+SELECT title, id, rating, vote_count FROM Movies
+LEFT JOIN Genres ON id=movie_id
+LEFT JOIN all_gen ON Genres.genre = all_gen.genre
+WHERE title <> '${inputMovie}'
+GROUP BY title, id, rating, vote_count
+HAVING COUNT(all_gen.genre) >= ALL (SELECT COUNT(genre) FROM all_gen)
+ORDER BY rating DESC, vote_count DESC
+LIMIT 5;`;
 
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
@@ -123,7 +107,7 @@ router.get('/recommendations/:movie', function (req, res) {
 });
 
 
-/* ----- Q3 (Best Of Decades) ----- */
+----- Q3 (Best Of Decades) -----
 
 router.get('/decades', function(req, res) {
   var query = `
@@ -132,7 +116,7 @@ router.get('/decades', function(req, res) {
       SELECT DISTINCT release_year as year
       FROM Movies
       ORDER BY release_year
-    ) y;
+    ) y
   `;
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
@@ -143,22 +127,24 @@ router.get('/decades', function(req, res) {
   });
 });
 
-router.get('/decades/:decade', function (req, res) {
+router.get('/bestOf/:decade', function (req, res) {
   var inputDecade = req.params.decade;
-
-  var query = `SELECT g.genre, m.title, m.vote_count, m.release_year
-    FROM Movies m
-    JOIN Genres g ON m.id = g.movie_id
-    WHERE release_year BETWEEN ${inputDecade} AND ${inputDecade}+9
-    AND m.vote_count >= ALL (
-      SELECT MAX(vote_count)
-      FROM Movies m2
-      JOIN Genres g2 on m2.id = g2.movie_id
-      WHERE m2.release_year BETWEEN ${inputDecade} AND ${inputDecade}+9
-      AND g2.genre = g.genre
-      GROUP BY g2.genre)
-    GROUP BY g.genre
-    ORDER BY g.genre, m.vote_count DESC;`;
+  // TODO: Part (2) - Edit query below
+  var query = `WITH best as (SELECT genre, max(vote_count) as voters
+FROM Movies
+JOIN Genres
+ON movie_id = id
+WHERE release_year >= ${inputDecade} AND release_year < ${inputDecade} + 10
+GROUP BY genre)
+SELECT best.genre, title, vote_count, release_year
+FROM Movies
+JOIN Genres
+ON movie_id = id
+RIGHT JOIN best
+ON best.genre = Genres.genre AND voters = vote_count
+WHERE release_year >= ${inputDecade} AND release_year < ${inputDecade} + 10
+GROUP BY genre
+ORDER BY genre;`;
 
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
@@ -190,6 +176,5 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
-
 
 module.exports = router;
