@@ -2,17 +2,17 @@ var app = angular.module('angularjsNodejsTutorial', []);
 
 // Controller for the Dashboard page
 app.controller('dashboardController', function($scope, $http) {
-  $scope.genres = {};
+  $scope.dogs = {};
   $scope.movies = {};
 
   $http({
-    url: '/genres',
+    url: '/dogs',
     method: 'GET'
   }).then(res => {
-    console.log("Genres: ", res.data);
-    $scope.genres = res.data;
+    console.log("Dogs: ", res.data);
+    $scope.dogs = res.data;
   }, err => {
-    console.log("Genres ERROR: ", err);
+    console.log("Dogs ERROR: ", err);
   });
 
   // get the top rated, voted movies when a genre is clicked
