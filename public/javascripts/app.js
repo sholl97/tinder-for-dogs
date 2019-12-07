@@ -36,6 +36,40 @@ app.controller('dashboardController', function($scope, $http) {
   };
 });
 
+// Controller for the Tinder page
+app.controller('tinderController', function($scope, $http) {
+  //$scope.tinder = {};
+  console.log("HELLO???");
+  
+  //display dog photo and breed
+  $http({
+    url: '/:tinder',
+    method: 'GET'
+  }).then(res => {
+    console.log("First Dog: ", res.data);
+    $scope.tinder = res.data;
+  }, err => {
+    console.log("First Dog ERROR: ", err);
+  });
+
+  //If user likes the dog
+  $scope.goodDog = function(dog) {
+    //TODO: get more than just the breed to be passed through
+    var url = '/tinder/' + dog.breed_1;
+    $http({
+      url: url,
+      method: 'GET'
+    }).then(res => {
+      console.log("Good Dog: ", res.data);
+      $scope.goodDog = res.data;
+    }, err => {
+      console.log("Good Dog ERROR: ", err);
+    });
+  };
+
+
+});
+
 /*/ Controller for the Recommendations Page
 app.controller('recommendationsController', function($scope, $http) {
 
