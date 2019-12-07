@@ -32,15 +32,15 @@
     <!-- User Content -->
     <!-- Navbar -->
     <!-- Sample Content. You can either use this or make your own -->
-    <div class="container pics-container">
-      <div class="jumbotron">
-        <div class="dogs-container">
-          <div class="dog" ng-repeat="dog in posterdogs">
-          <img src="{{dog.photoLink}}" alt="" class="poster" />
-          </div>
+    <div class="container dogs-container">
+      <div class="dogs-container">
+        <div class="dogs" ng-repeat="dog in dogs">
+        <img src="{{dog.photo}}" alt=""/>
         </div>
       </div>
     </div>
+
+
 
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
