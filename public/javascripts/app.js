@@ -16,17 +16,24 @@ app.controller('dashboardController', function($scope, $http) {
   });
 
   // get the top rated, voted movies when a genre is clicked
-  $scope.showMovies = function(genre) {
-    var url = '/movies/' + genre.genre;
-    $http({
-      url: url,
-      method: 'GET'
-    }).then(res => {
-      console.log(res.data);
-      $scope.movies = res.data;
-    }, err => {
-      console.log("Movies ERROR: ", err);
-    });
+   const getPicData = (dogs) => {
+    $scope.picDog = [];
+
+    dogs.forEach((photo) => {
+      let photoUrl = 'http://www.hosa@eniac.seas.upenn.edu' + stanford.photo_name;
+
+      $http({
+        url: photoUrl,
+        method: 'GET'
+      }).then(res => {
+        const photolinks = res.data;
+        const data = {};
+        data['photoLink'] = photolinks.photo;
+
+        $scope.photoDogs.push(data);
+        console.log(data);
+      });
+    })
   };
 });
 
