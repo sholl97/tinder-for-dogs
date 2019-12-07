@@ -231,9 +231,21 @@ ORDER BY genre;`;
 });
 
 
-/* ----- Bonus (Posters) ----- */
+/* ----- Bonus (Posters) ----- 
+router.get('/get/posters', function(req, res) {
 
+  var year = req.params.year; // year parameter from url
+  var query = 'SELECT * from Movies ORDER BY RAND() LIMIT 12';
 
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+});
+
+*/
 
 /* General Template for GET requests:
 

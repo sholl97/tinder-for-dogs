@@ -33,35 +33,15 @@
     </nav>
 
     <!-- User Content -->
-    <br>
-    <div class="container movie-container">
-      <div class="jumbotron">
-        <div class="h5">Title</div>
-        <!-- Display the Genres -->
-        <div class="dogs-container">
-          <div class="dog" ng-repeat="d in dogs" ng-click="showMovies(d)" id="{{'button-' + d.photo}}">
-            {{d.photo}}
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="jumbotron">
-        <!-- Display top 10 movies when a genre is clicked -->
-        <div class="movies-container">
-          <div class="movie">
-            <div class="header-lg"><strong>Title</strong></div>
-            <div class="header"><strong>Rating</strong></div>
-            <div class="header"><strong>Vote Count</strong></div>
-          </div>
-          <div class="movie" id="results" ng-repeat="m in movies">
-            <div class="title">{{m.title}}</div>
-            <div class="rating">{{m.rating}}</div>
-            <div class="votes">{{m.vote_count}}</div>
-          </div>
+    <!-- Navbar -->
+    <!-- Sample Content. You can either use this or make your own -->
+    <div class="container dogs-container">
+      <div class="dogs-container">
+        <div class="dogs" ng-repeat="dog in dogs">
+        <img src="{{dog.photo}}" alt=""/>
         </div>
       </div>
     </div>
-
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
