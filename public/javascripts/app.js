@@ -10,27 +10,26 @@ app.controller('dashboardController', function($scope, $http) {
     method: 'GET'
   }).then(res => {
     console.log("Dogs: ", res.data);
-    $scope.dogs = res.data;
+    const dogs = res.data;
+    console.log(dogs);
+    getPicData(dogs);
   }, err => {
     console.log("Dogs ERROR: ", err);
   });
 
   // get the top rated, voted movies when a genre is clicked
-   const getPicData = (dogs) => {
-    $scope.picDog = [];
+  const getPicData = (dogs) => {
+    $scope.dogs = [];
 
-    dogs.forEach((photo) => {
-      let photoUrl = 'http://www.hosa@eniac.seas.upenn.edu' + stanford.photo_name;
-
+    dogs.forEach((dogs) => {
       $http({
-        url: photoUrl,
+        url: '/dogs',
         method: 'GET'
       }).then(res => {
-        const photolinks = res.data;
+        const photos = res.data;
         const data = {};
-        data['photoLink'] = photolinks.photo;
-
-        $scope.photoDogs.push(data);
+        data['photo'] = 'https://www.seas.upenn.edu/~hosa/cis550/' + dogs.photo;
+        $scope.dogs.push(data);
         console.log(data);
       });
     })
