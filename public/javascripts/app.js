@@ -34,6 +34,8 @@ app.controller('dashboardController', function($scope, $http) {
 app.controller('tinderController', function($scope, $http) {
   //$scope.tinder = {};
   console.log("HELLO???");
+  
+  //display dog photo and breed
   $http({
     url: '/:tinder',
     method: 'GET'
@@ -43,6 +45,23 @@ app.controller('tinderController', function($scope, $http) {
   }, err => {
     console.log("First Dog ERROR: ", err);
   });
+
+  //If user doesn't like the dog
+  $scope.badDog = function(dog) {
+    //TODO: get more than just the breed to be passed through
+    var url = '/tinder/' + dog.breed_1;
+    $http({
+      url: url,
+      method: 'GET'
+    }).then(res => {
+      console.log("Bad Dog: ", res.data);
+      $scope.badDog = res.data;
+    }, err => {
+      console.log("Bad Dog ERROR: ", err);
+    });
+  };
+
+
 });
 
 /*/ Controller for the Recommendations Page
