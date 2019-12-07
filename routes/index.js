@@ -110,6 +110,17 @@ router.get('/:tinder', function(req, res) {
   });
 });
 
+//router for storing bad dog
+router.get('/tinder/:dog', function (req, res) {
+  var inputBreed = req.params.dog;
+  console.log("You're a bad dog: ", inputBreed);
+
+  //TODO: store in some badDog list
+
+  //TODO: generate next photo, taking into account the new item in the badDog list
+  
+});
+
 
 /* ----- Q2 (Recommendations) ----- */
 

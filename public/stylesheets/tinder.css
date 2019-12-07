@@ -14,26 +14,10 @@
   box-sizing: border-box;
 }
 
-.movies-container {
-  display: flex;
-  flex-flow: column wrap;
-  /* margin-top: 10px; */
-}
-
-.movies-container .movie {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  height: 40px;
-}
-
-.movie .title, .movie .header-lg {
+.dog .title, .dog .header-lg {
   flex: 1 0 50%;
 }
 
-.movie .header, .movie .rating, .movie .votes {
-  flex: 1 0 25%;
-}
 
 .center {
   display: block;
