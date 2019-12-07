@@ -3,6 +3,13 @@ var router = express.Router();
 var path = require('path');
 var config = require('../db-config.js');
 
+//express sessions
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+router.use(cookieParser());
+router.use(session({secret: "Shh, it's a secret!"}));
+
+
 /* ----- Connects to your mySQL database ----- */
 
 var mysql = require('mysql');
@@ -10,16 +17,28 @@ var mysql = require('mysql');
 config.connectionLimit = 10;
 var connection = mysql.createPool(config);
 
+
+
+
 /* ------------------------------------------- */
 /* ----- Routers to handle FILE requests ----- */
 /* ------------------------------------------- */
 
 router.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'dashboard.html'));
+
 });
 
 router.get('/tinder', function(req, res) {
-  console.log("tinder");
+  console.log("tinder start");
+
+  if(req.session.page_views){
+      req.session.page_views++;
+      console.log("You visited this page " + req.session.page_views + " times");
+   } else {
+      req.session.page_views = 1;
+      console.log("Welcome to this page for the first time!");
+  }
   res.sendFile(path.join(__dirname, '../', 'views', 'tinder.html'));
 });
 
@@ -89,6 +108,7 @@ router.get('/genres/:genre', function (req, res) {
 
 router.get('/:tinder', function(req, res) {
   console.log("start of tinder");
+
   var query = `SELECT *
     FROM (SELECT s.photo, sd.breed_1, sd.breed_2, sd.color_1, sd.color_2,
     (akc.height_low_inches + akc.height_high_inches)/2 AS avg_height, (akc.weight_low_lbs + akc.weight_high_lbs)/2 AS avg_weight
@@ -110,10 +130,23 @@ router.get('/:tinder', function(req, res) {
   });
 });
 
-//router for storing bad dog
+//router for storing good dog
 router.get('/tinder/:dog', function (req, res) {
   var inputBreed = req.params.dog;
-  console.log("You're a bad dog: ", inputBreed);
+
+  if(req.session.dogSeen){
+      req.session.dogSeen.push(inputBreed);
+      console.log("Updated list: " + req.session.dogSeen);
+   } else {
+      req.session.dogSeen = [];
+      req.session.dogSeen.push(inputBreed);
+      console.log("Initialized for the first time: " + req.session.dogSeen);
+  }
+
+  req.session.dog_seen.add(inputBreed);
+  console.log("You're a bad dog: ", req.session.dog_seen);
+  
+
 
   //TODO: store in some badDog list
 

@@ -46,18 +46,18 @@ app.controller('tinderController', function($scope, $http) {
     console.log("First Dog ERROR: ", err);
   });
 
-  //If user doesn't like the dog
-  $scope.badDog = function(dog) {
+  //If user likes the dog
+  $scope.goodDog = function(dog) {
     //TODO: get more than just the breed to be passed through
     var url = '/tinder/' + dog.breed_1;
     $http({
       url: url,
       method: 'GET'
     }).then(res => {
-      console.log("Bad Dog: ", res.data);
-      $scope.badDog = res.data;
+      console.log("Good Dog: ", res.data);
+      $scope.goodDog = res.data;
     }, err => {
-      console.log("Bad Dog ERROR: ", err);
+      console.log("Good Dog ERROR: ", err);
     });
   };
 
