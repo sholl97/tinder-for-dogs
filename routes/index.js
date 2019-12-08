@@ -42,6 +42,9 @@ router.get('/tinder', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'tinder.html'));
 });
 
+// router.get('/final', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../', 'views', 'final.html'));
+// });
 
 /* ----- Q2 (Recommendations) ----- */
 router.get('/recommendations', function(req, res) {
@@ -147,6 +150,7 @@ router.get('/tinder/good/:dog', function (req, res) {
   }
   if(req.session.goodDogs.length > 9 || req.session.goodDogs.length + req.session.badDogs.length > 9){
     console.log("Hey look ma we made it");
+    res.json(true);
   }
   console.log("end ", req.session.goodDogs);
 

@@ -86,8 +86,14 @@ app.controller('tinderController', function($scope, $http) {
     }).then(res => {
       console.log("help please god");
       console.log("Good Dog: ", res.data);
-      $scope.goodDog = res.data;
-
+      
+      if(res.data === true) {
+        console.log("HELP HELP END ME PLEASE");
+        $scope.end = true;
+      } else {
+        $scope.goodDog = res.data;
+        $scope.end = false;
+      }
     }, err => {
       console.log("Good Dog ERROR: ", err);
     });
