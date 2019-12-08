@@ -42,14 +42,16 @@ router.get('/tinder', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'tinder.html'));
 });
 
+
+router.get('/final', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'final.html'));
+});
+
 // router.get('/final', function(req, res) {
 //   res.sendFile(path.join(__dirname, '../', 'views', 'final.html'));
 // });
 
-/* ----- Q2 (Recommendations) ----- */
-router.get('/recommendations', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'recommendations.html'));
-});
+//////////////////
 
 /* ----- Q3 (Best Of Decades) ----- */
 router.get('/bestof', function(req, res) {
@@ -110,7 +112,7 @@ router.get('/genres/:genre', function (req, res) {
 });
 
 
-router.get('/:tinder', function(req, res) {
+router.get('/tinder/:tinder', function(req, res) {
   console.log("start of tinder");
 
   var query = `SELECT *
