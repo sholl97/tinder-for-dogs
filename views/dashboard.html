@@ -16,7 +16,7 @@
 
   <body ng-controller="dashboardController">
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-tinder">
       <span class="navbar-brand">Tinder for Dogs<span class="badge badge-secondary" style="font-size: 0.5em; vertical-align: top;">Beta</span></span>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -33,17 +33,25 @@
         <span class="navbar-text">Adopting in: <strong>Austin, TX</strong></span>
       </div>
     </nav>
-
+    <br>
 
     <!-- DOG GRID -->
-    <div class="container dogs-container">
-      <div class="dogs-container">
-        <div class="dogs" ng-repeat="dog in dogs">
-        <img class="cover" src= "{{dog.photo}}" alt="Image" style="width:350px;height:350px;"/>
+    <div class="container bg-tinder rounded-top">
+        <div class="dogs-container">
+          <div class="dogs" ng-repeat="dog in dogs">
+            <img class="cover" src= "{{dog.photo}}" alt="Image" style="width:350px;height:350px;"/>
+          </div>
         </div>
-      </div>
     </div>
+    <br>
 
+    <!-- OVERVIEW -->
+    <div class="container bg-tinder rounded-bottom" style="padding-top: 2rem; padding-bottom: 20px;">
+      <h2 class=tindtext-dark>Hello</h2>
+      <p>Maybe some overview text here.</p>
+    </div>
+    <br>
+    
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
