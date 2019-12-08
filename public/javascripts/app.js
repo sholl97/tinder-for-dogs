@@ -52,20 +52,38 @@ app.controller('tinderController', function($scope, $http) {
     console.log("First Dog ERROR: ", err);
   });
 
+  $scope.nextDog = function() {
+    $http({
+    url: '/:tinder',
+    method: 'GET'
+  }).then(res => {
+    console.log("Next Dog: ", res.data);
+    $scope.tinder = res.data;
+  }, err => {
+    console.log("Next Dog ERROR: ", err);
+  });
+  }
+
   //If user likes the dog
   $scope.goodDog = function(dog) {
     //TODO: get more than just the breed to be passed through
-    var url = '/tinder/' + dog.breed_1;
+    console.log("GOOD DOG CALLED");
+    var url = `/tinder/good/:${dog.breed_1}`;
     $http({
       url: url,
       method: 'GET'
     }).then(res => {
+      console.log("help please god");
       console.log("Good Dog: ", res.data);
       $scope.goodDog = res.data;
+
     }, err => {
       console.log("Good Dog ERROR: ", err);
     });
+    console.log("good dog ended");
   };
+
+    
 
 
 });

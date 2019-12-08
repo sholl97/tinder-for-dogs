@@ -7,7 +7,7 @@ var config = require('../db-config.js');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 router.use(cookieParser());
-router.use(session({secret: "Shh, it's a secret!"}));
+router.use(session({secret: 'max'}));
 
 
 /* ----- Connects to your mySQL database ----- */
@@ -131,8 +131,9 @@ router.get('/:tinder', function(req, res) {
 });
 
 //router for storing good dog
-router.get('/tinder/:dog', function (req, res) {
+router.get('/tinder/good/:dog', function (req, res) {
   var inputBreed = req.params.dog;
+  console.log("beginning ", req.session.dogSeen);
 
   if(req.session.dogSeen){
       req.session.dogSeen.push(inputBreed);
@@ -142,17 +143,19 @@ router.get('/tinder/:dog', function (req, res) {
       req.session.dogSeen.push(inputBreed);
       console.log("Initialized for the first time: " + req.session.dogSeen);
   }
+  console.log("end ", req.session.dogSeen);
 
-  req.session.dog_seen.add(inputBreed);
-  console.log("You're a bad dog: ", req.session.dog_seen);
-  
+  req.session.dogSeen.add(inputBreed);
+  console.log("GOBBLDEGOOK");
+  //console.log("You're a bad dog: ", req.session.dog_seen);
+});
 
 
   //TODO: store in some badDog list
 
   //TODO: generate next photo, taking into account the new item in the badDog list
   
-});
+
 
 
 /* ----- Q2 (Recommendations) ----- */
@@ -263,5 +266,4 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
-
 module.exports = router;
