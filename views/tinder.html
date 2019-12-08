@@ -33,14 +33,11 @@
         <span class="navbar-text">Adopting in: <strong>Austin, TX</strong></span>
       </div>
     </nav>
-
-    <!-- User Content -->
     <br>
+    
     <div class="container">
       <div class="jumbotron">
-        <!-- Display the dog -->
-        
-        <!-- if not end show this-->
+        <!-- Display the dog -->        
         <div class="dogs-container">
           <div class="dog" ng-repeat="d in tinder" ng-if="!end">
             <img class="center" src="https://www.seas.upenn.edu/~hosa/cis550/{{d.photo}}" alt="{{d.breed_1}}">
@@ -50,7 +47,7 @@
           </div>
         </div>
 
-        <!-- if end show this button to get to the last page -->
+        <!-- Penultimate button -->
         <div ng-if="end">
           <a href="/final" class="btn btn-lg btn-block" style="background-color: #fb526b; color:white;">Show me my dog!</a>
         </div>
