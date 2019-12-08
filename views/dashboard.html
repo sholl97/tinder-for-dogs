@@ -15,26 +15,27 @@
   </head>
 
   <body ng-controller="dashboardController">
-    <!-- Navbar -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <span class="navbar-brand center">Tinder for Dogs</span>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="/">Home</a>
-          <a class="nav-item nav-link" href="/tinder">Tinder</a>
-          <!--
-          <a class="nav-item nav-link" href="/recommendations">Recommendations</a>
-          <a class="nav-item nav-link" href="/bestof">Best Of</a>
-          <a class="nav-item nav-link" href="/posters">Posters</a>
-          <a class="nav-item nav-link" href="/reference">Reference</a>
-          -->
-        </div>
+      <span class="navbar-brand">Tinder for Dogs<span class="badge badge-secondary" style="font-size: 0.5em; vertical-align: top;">Beta</span></span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav item nav-link active" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/tinder">Tinder</a>
+          </li>
+        </ul>
+        <span class="navbar-text">Adopting in: <strong>Austin, TX</strong></span>
       </div>
     </nav>
 
-    <!-- User Content -->
-    <!-- Navbar -->
-    <!-- Sample Content. You can either use this or make your own -->
+
+    <!-- DOG GRID -->
     <div class="container dogs-container">
       <div class="dogs-container">
         <div class="dogs" ng-repeat="dog in dogs">
@@ -42,6 +43,7 @@
         </div>
       </div>
     </div>
+
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
