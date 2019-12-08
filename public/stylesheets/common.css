@@ -46,3 +46,15 @@ body {
 .back-btn:active {
   background: #d86bbe;
 }
+
+.bg-tinder {
+  background-color: #fefefe;
+}
+
+.tindtext-dark {
+  color: #474747;
+}
+
+.tindtext-light {
+  color: #bdc2cd;
+}
