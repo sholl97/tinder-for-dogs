@@ -4,7 +4,6 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  padding: 20px;
   /* border-bottom: 1px solid #ddd; */
 }
 
@@ -22,9 +21,4 @@
 .cover {
   padding: 20px;
   object-fit: cover;
-}
-
-.narrowtron {
-  background-color: #f3f4f7;
-  padding: 2rem;
 }
