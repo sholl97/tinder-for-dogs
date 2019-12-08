@@ -113,6 +113,15 @@ router.get('/genres/:genre', function (req, res) {
 router.get('/:tinder', function(req, res) {
   console.log("start of tinder");
 
+  var query =
+    `SELECT s.photo, sb.id, sb.breed
+    FROM stanford s
+    JOIN stanford_breeds sb ON s.breed = sb.breed
+    ORDER BY RAND()
+    LIMIT 1;`;
+    /*
+  console.log("start of tinder");
+
   var query = `SELECT *
     FROM (SELECT s.photo, sd.breed_1, sd.breed_2, sd.color_1, sd.color_2,
     (akc.height_low + akc.height_high)/2 AS avg_height, (akc.weight_low + akc.weight_high)/2 AS avg_weight
@@ -123,7 +132,7 @@ router.get('/:tinder', function(req, res) {
     JOIN shelter_dogs sd ON ab.breed_name = sd.breed
     ORDER BY RAND()) AS T
     LIMIT 1;`;
-
+*/
   console.log("hello router");
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
@@ -176,7 +185,7 @@ router.get('/tinder/bad/:dog', function (req, res) {
       req.session.badDogs.push(inputBreed);
       console.log("Initialized bad for the first time: " + req.session.badDogs);
   }
-  
+
   //redirect when 10 swipes are hit
   if(req.session.badDogs.length > 9 || req.session.goodDogs.length + req.session.badDogs.length > 9) {
     console.log("Hey look ma we made it");
@@ -279,7 +288,7 @@ ORDER BY genre;`;
 });
 
 
-/* ----- Bonus (Posters) ----- 
+/* ----- Bonus (Posters) -----
 router.get('/get/posters', function(req, res) {
 
   var year = req.params.year; // year parameter from url
