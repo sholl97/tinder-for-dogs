@@ -112,13 +112,71 @@ router.get('/genres/:genre', function (req, res) {
 
 router.get('/:tinder', function(req, res) {
   console.log("start of tinder");
+  console.log("start of tinder NEW ");
+  console.log(req.session.goodDogs);
+  console.log(req.session.badDogs);
+  var query = '';
+  if(req.session.goodDogs || req.session.badDogs) {
+    console.log("goodDogs AHHH: ", req.session.goodDogs);
+    //TEST query
+    query += `SELECT (akc.weight_low + akc.weight_high)/2 AS weight_average
+FROM akc JOIN stanford_breeds sb
+ON akc.id = sb.id
+JOIN stanford s
+ON sb.breed = s.breed
+WHERE sb.id IN (${req.session.goodDogs.join()});`;
 
-  var query =
-    `SELECT s.photo, sb.id, sb.breed
+    console.log("scary query: ", query);
+    /*
+    //CTE: for each breed liked, what is the average weight
+    query += `WITH breeds_liked AS (
+                SELECT (akc.weight_low + akc.weight_high)/2 AS weight_average
+                FROM akc
+                JOIN stanford_breeds sb ON akc.id = sb.id
+                JOIN stanford s ON sb.breed = s.breed
+                WHERE s.breed IN ${req.sessions.goodDogs.join(',')}
+              )`
+
+    //base query
+    query += `SELECT sb.id, sb.breed, s.photo
+              FROM stanford s
+              JOIN stanford_breeds sb ON s.breed = sb.breed
+              JOIN akc ON akc.id = sb.id
+              WHERE True`;
+
+    //where statements for good dogs
+    req.sessions.goodDogs.forEach(myFunction);
+    function myFunction(item) {
+      if(Math.random() < 0.8) {
+
+        query += `AND (akc.weight_low + akc.weight_high)/2 >= ALL(
+                    SELECT (akc2.weight_low + akc2.weight_high)/2 AS average_weight
+                    FROM akc akc2
+                    WHERE akc2.id = sb.id)  `
+      }
+    }*/
+
+    //where statements for bad dogs
+    //append where statement to the query
+    //list of breeds. for each thing in that breed, add a where statement
+
+  } else {
+    query =
+      `SELECT s.photo, sb.id, sb.breed
     FROM stanford s
     JOIN stanford_breeds sb ON s.breed = sb.breed
     ORDER BY RAND()
     LIMIT 1;`;
+  }
+  console.log("hello router");
+  connection.query(query, function (err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+
     /*
   console.log("start of tinder");
 
@@ -133,14 +191,6 @@ router.get('/:tinder', function(req, res) {
     ORDER BY RAND()) AS T
     LIMIT 1;`;
 */
-  console.log("hello router");
-  connection.query(query, function (err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      console.log(rows);
-      res.json(rows);
-    }
-  });
 });
 
 //router for storing good dog
