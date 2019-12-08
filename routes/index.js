@@ -133,23 +133,44 @@ router.get('/:tinder', function(req, res) {
 //router for storing good dog
 router.get('/tinder/good/:dog', function (req, res) {
   var inputBreed = req.params.dog;
-  console.log("beginning ", req.session.dogSeen);
+  console.log("beginning ", req.session.goodDogs);
 
-  if(req.session.dogSeen){
-      req.session.dogSeen.push(inputBreed);
-      console.log("Updated list: " + req.session.dogSeen);
+  if(req.session.goodDogs){
+      req.session.goodDogs.push(inputBreed);
+      console.log("Updated good list: " + req.session.goodDogs);
+      console.log("Updated bad list: " + req.session.badDogs);
    } else {
-      req.session.dogSeen = [];
-      req.session.dogSeen.push(inputBreed);
-      console.log("Initialized for the first time: " + req.session.dogSeen);
+      req.session.goodDogs = [];
+      req.session.goodDogs.push(inputBreed);
+      console.log("Initialized good for the first time: " + req.session.goodDogs);
   }
-  console.log("end ", req.session.dogSeen);
+  console.log("end ", req.session.goodDogs);
 
-  req.session.dogSeen.add(inputBreed);
+  req.session.goodDogs.add(inputBreed);
   console.log("GOBBLDEGOOK");
   //console.log("You're a bad dog: ", req.session.dog_seen);
 });
 
+//router for storing bad dog
+router.get('/tinder/bad/:dog', function (req, res) {
+  var inputBreed = req.params.dog;
+  console.log("beginning ", req.session.badDogs);
+
+  if(req.session.badDogs){
+      req.session.badDogs.push(inputBreed);
+      console.log("Updated good list: " + req.session.goodDogs);
+      console.log("Updated bad list: " + req.session.badDogs);
+   } else {
+      req.session.badDogs = [];
+      req.session.badDogs.push(inputBreed);
+      console.log("Initialized bad for the first time: " + req.session.badDogs);
+  }
+  console.log("end ", req.session.badDogs);
+
+  req.session.badDogs.add(inputBreed);
+  console.log("GOBBLDEGOOK");
+  //console.log("You're a bad dog: ", req.session.dog_seen);
+});
 
   //TODO: store in some badDog list
 

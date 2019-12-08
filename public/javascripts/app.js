@@ -54,21 +54,20 @@ app.controller('tinderController', function($scope, $http) {
 
   $scope.nextDog = function() {
     $http({
-    url: '/:tinder',
-    method: 'GET'
-  }).then(res => {
-    console.log("Next Dog: ", res.data);
-    $scope.tinder = res.data;
-  }, err => {
-    console.log("Next Dog ERROR: ", err);
-  });
+      url: '/:tinder',
+      method: 'GET'
+    }).then(res => {
+      console.log("Next Dog: ", res.data);
+      $scope.tinder = res.data;
+    }, err => {
+      console.log("Next Dog ERROR: ", err);
+    });
   }
 
   //If user likes the dog
   $scope.goodDog = function(dog) {
-    //TODO: get more than just the breed to be passed through
-    console.log("GOOD DOG CALLED");
-    var url = `/tinder/good/:${dog.breed_1}`;
+    console.log("Good Dog Start");
+    var url = `/tinder/good/${dog.breed_1}`;
     $http({
       url: url,
       method: 'GET'
@@ -80,13 +79,28 @@ app.controller('tinderController', function($scope, $http) {
     }, err => {
       console.log("Good Dog ERROR: ", err);
     });
-    console.log("good dog ended");
+    console.log("Good Dog End");
   };
 
-    
+  //If user dislikes the dog
+  $scope.badDog = function(dog) {
+    console.log("Bad Dog Start");
+    var url = `/tinder/bad/${dog.breed_1}`;
+    $http({
+      url: url,
+      method: 'GET'
+    }).then(res => {
+      console.log("help please bad");
+      console.log("Bad Dog: ", res.data);
+      $scope.badDog = res.data;
 
-
+    }, err => {
+      console.log("Bad Dog ERROR: ", err);
+    });
+    console.log("bad dog ended");
+  };
 });
+
 
 /*/ Controller for the Recommendations Page
 app.controller('recommendationsController', function($scope, $http) {
