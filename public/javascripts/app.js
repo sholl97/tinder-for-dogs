@@ -41,6 +41,18 @@ app.controller('tinderController', function($scope, $http) {
   //$scope.tinder = {};
   console.log("HELLO???");
   
+  // if(res.data === true) {
+  //   $http({
+  //     url: '/final',
+  //     method: 'GET'
+  //   }).then(res => {
+  //     console.log("Getting you your dog...");
+  //   // $scope.tinder = res.data;
+  //   }, err => {
+  //     console.log("Getting you your dog ERROR: ", err);
+  //   });
+  // }
+
   //display dog photo and breed
   $http({
     url: '/:tinder',
@@ -52,23 +64,69 @@ app.controller('tinderController', function($scope, $http) {
     console.log("First Dog ERROR: ", err);
   });
 
+  $scope.nextDog = function() {
+    $http({
+      url: '/:tinder',
+      method: 'GET'
+    }).then(res => {
+      console.log("Next Dog: ", res.data);
+      $scope.tinder = res.data;
+    }, err => {
+      console.log("Next Dog ERROR: ", err);
+    });
+  }
+
   //If user likes the dog
   $scope.goodDog = function(dog) {
-    //TODO: get more than just the breed to be passed through
-    var url = '/tinder/' + dog.breed_1;
+    console.log("Good Dog Start");
+    var url = `/tinder/good/${dog.breed_1}`;
     $http({
       url: url,
       method: 'GET'
     }).then(res => {
+      console.log("help please god");
       console.log("Good Dog: ", res.data);
-      $scope.goodDog = res.data;
+      
+      if(res.data === true) {
+        console.log("HELP HELP END ME PLEASE");
+        $scope.end = true;
+      } else {
+        $scope.goodDog = res.data;
+        $scope.end = false;
+      }
     }, err => {
       console.log("Good Dog ERROR: ", err);
     });
+    console.log("Good Dog End");
   };
 
+  //If user dislikes the dog
+  $scope.badDog = function(dog) {
+    console.log("Bad Dog Start");
+    //console.log("Current bad dogs: " + req.session.badDogs);
+    var url = `/tinder/bad/${dog.breed_1}`;
+    $http({
+      url: url,
+      method: 'GET'
+    }).then(res => {
+      console.log("help please bad");
+      console.log("Bad Dog: ", res.data);
+      
+      if(res.data === true) {
+        console.log("HELP HELP END ME PLEASE");
+        $scope.end = true;
+      } else {
+        $scope.badDog = res.data;
+        $scope.end = false;
+      }
 
+    }, err => {
+      console.log("Bad Dog ERROR: ", err);
+    });
+    console.log("bad dog ended");
+  };
 });
+
 
 /*/ Controller for the Recommendations Page
 app.controller('recommendationsController', function($scope, $http) {

@@ -7,7 +7,7 @@ var config = require('../db-config.js');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 router.use(cookieParser());
-router.use(session({secret: "Shh, it's a secret!"}));
+router.use(session({secret: 'max'}));
 
 
 /* ----- Connects to your mySQL database ----- */
@@ -41,6 +41,10 @@ router.get('/tinder', function(req, res) {
   }
   res.sendFile(path.join(__dirname, '../', 'views', 'tinder.html'));
 });
+
+// router.get('/final', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../', 'views', 'final.html'));
+// });
 
 /* ----- Q2 (Recommendations) ----- */
 router.get('/recommendations', function(req, res) {
@@ -131,28 +135,72 @@ router.get('/:tinder', function(req, res) {
 });
 
 //router for storing good dog
-router.get('/tinder/:dog', function (req, res) {
+router.get('/tinder/good/:dog', function (req, res) {
   var inputBreed = req.params.dog;
+  console.log("beginning ", req.session.goodDogs);
 
-  if(req.session.dogSeen){
-      req.session.dogSeen.push(inputBreed);
-      console.log("Updated list: " + req.session.dogSeen);
+  if(req.session.goodDogs){
+      req.session.goodDogs.push(inputBreed);
+      console.log("Updated good list: " + req.session.goodDogs);
+      console.log("Updated bad list: " + req.session.badDogs);
    } else {
-      req.session.dogSeen = [];
-      req.session.dogSeen.push(inputBreed);
-      console.log("Initialized for the first time: " + req.session.dogSeen);
+      req.session.goodDogs = [];
+      req.session.goodDogs.push(inputBreed);
+      console.log("Initialized good for the first time: " + req.session.goodDogs);
   }
+  if(req.session.goodDogs.length > 9 || req.session.goodDogs.length + req.session.badDogs.length > 9){
+    console.log("Hey look ma we made it");
+    res.json(true);
+  }
+  console.log("end ", req.session.goodDogs);
 
-  req.session.dog_seen.add(inputBreed);
-  console.log("You're a bad dog: ", req.session.dog_seen);
-  
+  req.session.goodDogs.add(inputBreed);
+  console.log("GOBBLDEGOOK");
+  //console.log("You're a bad dog: ", req.session.dog_seen);
 
+  //TODO: redirect when 10 swipes are hit
 
-  //TODO: store in some badDog list
-
-  //TODO: generate next photo, taking into account the new item in the badDog list
-  
 });
+
+//router for storing bad dog
+router.get('/tinder/bad/:dog', function (req, res) {
+  var inputBreed = req.params.dog;
+  console.log("beginning ", req.session.badDogs);
+
+  if(req.session.badDogs){
+      req.session.badDogs.push(inputBreed);
+      console.log("Updated good list: " + req.session.goodDogs);
+      console.log("Updated bad list: " + req.session.badDogs);
+   } else {
+      req.session.badDogs = [];
+      req.session.badDogs.push(inputBreed);
+      console.log("Initialized bad for the first time: " + req.session.badDogs);
+  }
+  
+  //redirect when 10 swipes are hit
+  if(req.session.badDogs.length > 9 || req.session.goodDogs.length + req.session.badDogs.length > 9) {
+    console.log("Hey look ma we made it");
+    res.json(true);
+
+    // $http({
+    //   url: '/',
+    //   method: 'GET'
+    // }).then(res => {
+    //   console.log("redirect attempt");
+
+    // }, err => {
+    //   console.log("Redirect err", err);
+    // });
+  }
+  console.log("end ", req.session.badDogs);
+
+  req.session.badDogs.add(inputBreed);
+  console.log("GOBBLDEGOOK");
+  //console.log("You're a bad dog: ", req.session.dog_seen);
+});
+
+
+
 
 
 /* ----- Q2 (Recommendations) ----- */
@@ -263,5 +311,4 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
-
 module.exports = router;
