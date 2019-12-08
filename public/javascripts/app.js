@@ -40,7 +40,7 @@ app.controller('dashboardController', function($scope, $http) {
 app.controller('tinderController', function($scope, $http) {
   //$scope.tinder = {};
   console.log("HELLO???");
-  
+
   // if(res.data === true) {
   //   $http({
   //     url: '/final',
@@ -79,14 +79,14 @@ app.controller('tinderController', function($scope, $http) {
   //If user likes the dog
   $scope.goodDog = function(dog) {
     console.log("Good Dog Start");
-    var url = `/tinder/good/${dog.breed_1}`;
+    var url = `/tinder/good/${dog.id}`;
     $http({
       url: url,
       method: 'GET'
     }).then(res => {
       console.log("help please god");
       console.log("Good Dog: ", res.data);
-      
+
       if(res.data === true) {
         console.log("HELP HELP END ME PLEASE");
         $scope.end = true;
@@ -104,14 +104,14 @@ app.controller('tinderController', function($scope, $http) {
   $scope.badDog = function(dog) {
     console.log("Bad Dog Start");
     //console.log("Current bad dogs: " + req.session.badDogs);
-    var url = `/tinder/bad/${dog.breed_1}`;
+    var url = `/tinder/bad/${dog.id}`;
     $http({
       url: url,
       method: 'GET'
     }).then(res => {
       console.log("help please bad");
       console.log("Bad Dog: ", res.data);
-      
+
       if(res.data === true) {
         console.log("HELP HELP END ME PLEASE");
         $scope.end = true;
