@@ -41,6 +41,18 @@ app.controller('tinderController', function($scope, $http) {
   //$scope.tinder = {};
   console.log("HELLO???");
   
+  // if(res.data === true) {
+  //   $http({
+  //     url: '/final',
+  //     method: 'GET'
+  //   }).then(res => {
+  //     console.log("Getting you your dog...");
+  //   // $scope.tinder = res.data;
+  //   }, err => {
+  //     console.log("Getting you your dog ERROR: ", err);
+  //   });
+  // }
+
   //display dog photo and breed
   $http({
     url: '/:tinder',
@@ -85,6 +97,7 @@ app.controller('tinderController', function($scope, $http) {
   //If user dislikes the dog
   $scope.badDog = function(dog) {
     console.log("Bad Dog Start");
+    //console.log("Current bad dogs: " + req.session.badDogs);
     var url = `/tinder/bad/${dog.breed_1}`;
     $http({
       url: url,
@@ -92,7 +105,14 @@ app.controller('tinderController', function($scope, $http) {
     }).then(res => {
       console.log("help please bad");
       console.log("Bad Dog: ", res.data);
-      $scope.badDog = res.data;
+      
+      if(res.data === true) {
+        console.log("HELP HELP END ME PLEASE");
+        $scope.end = true;
+      } else {
+        $scope.badDog = res.data;
+        $scope.end = false;
+      }
 
     }, err => {
       console.log("Bad Dog ERROR: ", err);

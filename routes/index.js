@@ -42,6 +42,7 @@ router.get('/tinder', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'tinder.html'));
 });
 
+
 /* ----- Q2 (Recommendations) ----- */
 router.get('/recommendations', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'recommendations.html'));
@@ -144,11 +145,17 @@ router.get('/tinder/good/:dog', function (req, res) {
       req.session.goodDogs.push(inputBreed);
       console.log("Initialized good for the first time: " + req.session.goodDogs);
   }
+  if(req.session.goodDogs.length > 9 || req.session.goodDogs.length + req.session.badDogs.length > 9){
+    console.log("Hey look ma we made it");
+  }
   console.log("end ", req.session.goodDogs);
 
   req.session.goodDogs.add(inputBreed);
   console.log("GOBBLDEGOOK");
   //console.log("You're a bad dog: ", req.session.dog_seen);
+
+  //TODO: redirect when 10 swipes are hit
+
 });
 
 //router for storing bad dog
@@ -165,6 +172,22 @@ router.get('/tinder/bad/:dog', function (req, res) {
       req.session.badDogs.push(inputBreed);
       console.log("Initialized bad for the first time: " + req.session.badDogs);
   }
+  
+  //redirect when 10 swipes are hit
+  if(req.session.badDogs.length > 9 || req.session.goodDogs.length + req.session.badDogs.length > 9) {
+    console.log("Hey look ma we made it");
+    res.json(true);
+
+    // $http({
+    //   url: '/',
+    //   method: 'GET'
+    // }).then(res => {
+    //   console.log("redirect attempt");
+
+    // }, err => {
+    //   console.log("Redirect err", err);
+    // });
+  }
   console.log("end ", req.session.badDogs);
 
   req.session.badDogs.add(inputBreed);
@@ -172,10 +195,7 @@ router.get('/tinder/bad/:dog', function (req, res) {
   //console.log("You're a bad dog: ", req.session.dog_seen);
 });
 
-  //TODO: store in some badDog list
 
-  //TODO: generate next photo, taking into account the new item in the badDog list
-  
 
 
 
