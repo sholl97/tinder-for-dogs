@@ -111,17 +111,27 @@ router.get('/genres/:genre', function (req, res) {
 
 
 router.get('/:tinder', function(req, res) {
-  console.log("start of tinder");
+  console.log("START OF TINDER");
   console.log("good: ", req.session.goodDogs);
   console.log("bad: ", req.session.badDogs);
   var query = '';
 
-  if(req.session.goodDogs) {
+  console.log("DEBUG\n\n");
+  ran = Math.random() * 10;
+  if(req.session.goodDogs){
+    len = req.session.goodDogs.length;
+  }
+  else{
+    len = 0
+  }
+  console.log(ran);
+  console.log(len);
+  if(req.session.goodDogs && ran <= len) {
     console.log("we have goodDogs: ", req.session.goodDogs);
-    
+    console.log("size: ", len);
 
 
-    query = `SELECT * FROM 
+    query = `SELECT * FROM
     (SELECT DISTINCT akc.id, (akc.weight_low + akc.weight_high)/2 AS weight_average
       FROM akc JOIN stanford_breeds sb
       ON akc.id = sb.id
@@ -176,6 +186,7 @@ router.get('/:tinder', function(req, res) {
     //list of breeds. for each thing in that breed, add a where statement
 
   } else {
+    console.log("RANDOM GENERATIONNNNN")
     query =
       `SELECT s.photo, sb.id, ab.breed_name AS breed
     FROM stanford s
@@ -186,6 +197,7 @@ router.get('/:tinder', function(req, res) {
     LIMIT 1;`;
   }
   console.log("hello router");
+  console.log(query);
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
     else {
