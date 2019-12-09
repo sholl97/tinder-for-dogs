@@ -31,7 +31,7 @@
             <a class="nav-link" href="/tinder">Tinder</a>
           </li>
           <li class="nav-item active">
-            <a class="nav item nav-link active" href="/guesser">Guesser</a>
+            <a class="nav item nav-link active" href="/guesser">Breed Guesser</a>
           </li>
         </ul>
         <span class="navbar-text">Adopting in: <strong>Austin, TX</strong></span>
@@ -40,51 +40,50 @@
     <br>
 
     <div class="container bg-tinder rounded-top" style="padding-top: 2rem; padding-bottom: 20px;">
-      <h2 class=tindtext-dark>BreedGuesser</h2>
-      <p>Tell us about your dog and we will guess what breed you have.</p>
-    </div>
-    <br>
-
-
-    <div class="jumbotron">
-        <div class="h5">Breed Guesser!</div>
-
-        <div class="h6">Give us some information about your dog and we'll guess what breed it is</div>
-        <div class="years-container">
-          <div class="dropdown-container">
-            Color:
-            <select class="dropdown" id="colorDropdown" ng-model="selectedColor" ng-options="b.color for b in breeds"></select>
-            Weight (lbs):
-            <select class="dropdown" id="weightDropdown" ng-model="selectedWeight" ng-options="n for n in weights"></select>
-            Height (ins):
-            <select class="dropdown" id="heightDropdown" ng-model="selectedHeight" ng-options="n for n in heights"></select>
+      <div class="row">
+        <div class="col">
+          <h2 class=tindtext-dark>Breed Guesser</h2>
+          <p>Tell us about your dog and we will guess what breed you have.</p>
+          <div class="years-container">
+            <div class="dropdown-container">
+              <p>Color: <select class="dropdown" id="colorDropdown" ng-model="selectedColor" ng-options="b.color for b in breeds"></select></p>
+              <p>Weight (lbs): <select class="dropdown" id="weightDropdown" ng-model="selectedWeight" ng-options="n for n in weights"></select></p>
+              <p>Height (ins): <select class="dropdown" id="heightDropdown" ng-model="selectedHeight" ng-options="n for n in heights"></select></p>
+              <button class="submit-btn" id="dogSubmitBtn" ng-click="submit()">Submit</button>
+            </div>
           </div>
-          <button class="submit-btn" id="dogSubmitBtn" ng-click="submit()">Submit</button>
+        </div>
+        <div class="col">
+          <img class="float-right rounded" src="https://seas.upenn.edu/~hosa/cis550/tinder-dog.png" width="250" height="250" alt="">
         </div>
       </div>
-
-
-
-
-
-      <div class="jumbotron">
-    <div class="container bg-tinder rounded-bottom" style="padding-top: 10px; padding-bottom: 20px;">
+    </div>
+    <br>
+    <!--
+      <div class="row">
+        <div class="col">
+          <h2 class=tindtext-dark>Hello!</h2>
+          <p>Click "Tinder" to get started on finding the perfect dog for you to adopt.</p>
+          <p>If you already have a dog, click "Breed Guesser" and we'll guess which breed you have.</p>
+        </div>
+        <div class="col">
+          <img class="float-right rounded" src="https://seas.upenn.edu/~hosa/cis550/tinder-dog.png" width="250" height="250" alt="">
+        </div>
+      </div>
+-->
+    <div class="container bg-tinder rounded-bottom">
       <div class="movies-container">
-          <div class="movie">
-            <div class="header"><strong>We think your dog is one of the following breed(s):</strong></div>
-          </div>
-          <div class="movie" id="results" ng-repeat="movie in dog">
-            {{movie.breed}}
-          </div>
+        <div class="movie">
+          <br>
+          <h6 class="tindtext-dark">We think your dog is one of the following breed(s):</h6>
+        </div>
+        <div class="movie" id="results" ng-repeat="movie in dog">
+          {{movie.breed}}
         </div>
       </div>
-      
+      <br>
     </div>
-    <br>
 
-    <!-- Sample Content. You can either use this or make your own -->
-      
-        
 
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

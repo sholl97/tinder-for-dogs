@@ -12,6 +12,7 @@
     <!-- Custom styles for this template-->
     <link href="/stylesheets/common.css" rel="stylesheet">
     <link href="/stylesheets/dashboard.css" rel="stylesheet">
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
   </head>
 
   <body ng-controller="dashboardController">
@@ -30,10 +31,13 @@
             <a class="nav-link" href="/tinder">Tinder</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/guesser">Guesser</a>
+            <a class="nav-link" href="/guesser">Breed Guesser</a>
           </li> 
         </ul>
-        <span class="navbar-text">Adopting in: <strong>Austin, TX</strong></span>
+        <span class="navbar-text">
+          Adopting in: <strong>Austin, TX</strong>&nbsp;
+          <!-- <img src="https://seas.upenn.edu/~hosa/cis550/tinder-dog.png" width="30" height="30" alt=""> -->
+        </span>
       </div>
     </nav>
     <br>
@@ -50,10 +54,23 @@
 
     <!-- OVERVIEW -->
     <div class="container bg-tinder rounded-bottom" style="padding-top: 2rem; padding-bottom: 20px;">
-      <h2 class=tindtext-dark>Hello</h2>
-      <p>Maybe some overview text here.</p>
+      <div class="row">
+        <div class="col">
+          <h2 class=tindtext-dark>Hello!</h2>
+          <p>Click "Tinder" to get started on finding the perfect dog for you to adopt.</p>
+          <p>If you already have a dog, click "Breed Guesser" and we'll guess which breed you have.</p>
+        </div>
+        <div class="col">
+          <img class="float-right rounded" src="https://seas.upenn.edu/~hosa/cis550/tinder-dog.png" width="250" height="250" alt="">
+        </div>
+      </div>      
     </div>
     <br>
+
+    <!-- Footer -->
+    <footer class="page-footer bg-tinder">
+      <div class="footer-copyright text-center">Made with 乁[ ◕ ᴥ ◕ ]ㄏ by Sam Holland, Sophie Trotto, Lucas Weiner</div>
+    </footer>
     
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
