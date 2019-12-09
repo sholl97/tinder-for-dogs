@@ -34,26 +34,22 @@
             <a class="nav-link" href="/guesser">Breed Guesser</a>
           </li> 
         </ul>
-        <span class="navbar-text">
-          Adopting in: <strong>Austin, TX</strong>&nbsp;
-          <!-- <img src="https://seas.upenn.edu/~hosa/cis550/tinder-dog.png" width="30" height="30" alt=""> -->
-        </span>
+        <div class="nav-item">
+          <span class="navbox-text">Adopting from:&nbsp;</span>
+        </div>
+        <div class="nav-item">
+          <select class="custom-select">
+            <option selected>Austin Animal Center</option>
+            <option value="1" disabled>NYC ASPCA Adoption Center (coming soon)</option>
+            <option value="2" disabled>Philly Animal Welfare Society (coming soon)</option>
+          </select>
+        </div>
       </div>
     </nav>
     <br>
 
-    <!-- DOG GRID -->
-    <div class="container bg-tinder rounded-top">
-        <div class="dogs-container">
-          <div class="dogs" ng-repeat="dog in dogs">
-            <img class="cover" src= "{{dog.photo}}" alt="Image" style="width:350px;height:350px;"/>
-          </div>
-        </div>
-    </div>
-    <br>
-
     <!-- OVERVIEW -->
-    <div class="container bg-tinder rounded-bottom" style="padding-top: 2rem; padding-bottom: 20px;">
+    <div class="container bg-tinder rounded-top" style="padding-top: 2rem; padding-bottom: 20px;">
       <div class="row">
         <div class="col">
           <h2 class=tindtext-dark>Hello!</h2>
@@ -64,6 +60,26 @@
           <img class="float-right rounded" src="https://seas.upenn.edu/~hosa/cis550/tinder-dog.png" width="250" height="250" alt="">
         </div>
       </div>      
+    </div>
+    <br>
+
+    <!-- BLOCKQUOTE -->
+    <blockquote class="blockquote text-center">
+      <p class="tindtext-dark">“Some dogs are Doggos, some are Puppers, and some may even be Pupperinos. But they are all Good Boyes.”</p>
+      <footer class="blockquote-footer">
+        <cite>
+          <a class="tindtext-link" href="https://twitter.com/DoggoDating">@DoggoDating</a>
+        </cite>
+      </footer>
+    </blockquote>
+
+    <!-- DOG GRID -->
+    <div class="container bg-tinder rounded-bottom">
+        <div class="dogs-container">
+          <div class="dogs" ng-repeat="dog in dogs">
+            <img class="cover" src= "{{dog.photo}}" alt="Image" style="width:350px;height:350px;"/>
+          </div>
+        </div>
     </div>
     <br>
 
