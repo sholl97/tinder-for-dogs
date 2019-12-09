@@ -88,7 +88,7 @@ router.get('/dogs', function(req, res) {
   var query = `SELECT s.photo
     FROM stanford s
     ORDER BY RAND()
-    LIMIT 12;`;
+    LIMIT 9;`;
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
     else {
