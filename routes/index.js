@@ -53,9 +53,9 @@ router.get('/final', function(req, res) {
 
 //////////////////
 
-/* ----- Q3 (Best Of Decades) ----- */
-router.get('/bestof', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'bestof.html'));
+/* ----- guesser ----- */
+router.get('/guesser', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'guesser.html'));
 });
 
 /* ----- Bonus (Posters) ----- */
@@ -290,6 +290,56 @@ router.get('/tinder/bad/:dog', function (req, res) {
 });
 
 
+router.get('/guesser/:guesser', function (req, res) {
+  var query = `SELECT DISTINCT color_1 as color FROM shelter_dogs`
+//   var inputDecade = req.params.decade;
+//   // TODO: Part (2) - Edit query below
+//   var query = `WITH best as (SELECT genre, max(vote_count) as voters
+// FROM Movies
+// JOIN Genres
+// ON movie_id = id
+// WHERE release_year >= ${inputDecade} AND release_year < ${inputDecade} + 10
+// GROUP BY genre)
+// SELECT best.genre, title, vote_count, release_year
+// FROM Movies
+// JOIN Genres
+// ON movie_id = id
+// RIGHT JOIN best
+// ON best.genre = Genres.genre AND voters = vote_count
+// WHERE release_year >= ${inputDecade} AND release_year < ${inputDecade} + 10
+// GROUP BY genre
+// ORDER BY genre;`;
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
+
+
+router.get('/guesser/:color/:weight/:height', function (req, res) {    
+  var query = `SELECT DISTINCT ab.breed_name AS breed
+    FROM stanford s
+    JOIN stanford_breeds sb ON s.breed = sb.breed
+    JOIN akc ON akc.id = sb.id
+    JOIN aspca_breeds ab ON ab.id = akc.id
+    JOIN breed_freq bf ON bf.breed_id = akc.id
+ WHERE akc.height_low < ${req.params.height} + 10 AND akc.height_high > ${req.params.height} - 10
+ AND akc.weight_low < ${req.params.weight} + 10 AND akc.weight_low > ${req.params.weight} - 10
+ AND bf.color = '${req.params.color}';`
+ console.log(query);
+  connection.query(query, function (err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
+
 
 
 
@@ -340,33 +390,6 @@ router.get('/decades', function(req, res) {
   });
 });
 
-router.get('/bestOf/:decade', function (req, res) {
-  var inputDecade = req.params.decade;
-  // TODO: Part (2) - Edit query below
-  var query = `WITH best as (SELECT genre, max(vote_count) as voters
-FROM Movies
-JOIN Genres
-ON movie_id = id
-WHERE release_year >= ${inputDecade} AND release_year < ${inputDecade} + 10
-GROUP BY genre)
-SELECT best.genre, title, vote_count, release_year
-FROM Movies
-JOIN Genres
-ON movie_id = id
-RIGHT JOIN best
-ON best.genre = Genres.genre AND voters = vote_count
-WHERE release_year >= ${inputDecade} AND release_year < ${inputDecade} + 10
-GROUP BY genre
-ORDER BY genre;`;
-
-  connection.query(query, function (err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      console.log(rows);
-      res.json(rows);
-    }
-  });
-});
 
 
 /* ----- Bonus (Posters) -----

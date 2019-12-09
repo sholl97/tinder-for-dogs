@@ -147,38 +147,47 @@ app.controller('finalController', function($scope, $http) {
 });
 
 
-/*// Controller for the Best Of Page
-app.controller('bestofController', function($scope, $http) {
+// Controller for the Best Of Page
+app.controller('guesserController', function($scope, $http) {
 
   $http({
-    url: '/decades',
+    url: '/guesser/:guesser',
     method: 'GET'
   }).then(res => {
-    console.log("Year: ", res.data);
-    $scope.decades = res.data;
+    console.log("Colors: ", res.data);
+    $scope.breeds = res.data;
+    $scope.weights = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120];
+    $scope.heights = [5,10,15,20,25,30,35,40,45,50,55,60,65,70];
   }, err => {
-    console.log("Year ERROR: ", err);
+    console.log("color ERROR: ", err);
   });
 
-  $scope.bestofMovies = '';
-  $scope.selectedDecade = '';
 
-  $scope.submitDecade = function() {
-    var url = '/bestof/' + $scope.selectedDecade.decade;
-    if ($scope.selectedYear !== "") {
+
+  $scope.submit = function() {
+    var url = `/guesser/${$scope.selectedColor.color}/${$scope.selectedWeight}/${$scope.selectedHeight}`;
+    console.log(url);
+    if ($scope.selectedColor !== "") {
       $http({
         url: url,
         method: 'GET'
       }).then(res => {
-        console.log(res.data);
-        $scope.bestofMovies = res.data;
+        console.log("res contains: ",res.data);
+        if(res.data !== undefined && res.data.length != 0){
+          console.log("help this train");
+        $scope.dog = res.data;
+      }
+      else {
+        console.log("MADE IT");
+        $scope.dog = [{breed: "Sorry we couldn't find a breed with those qualities"}];
+      }
       }, err => {
         console.log("Movies ERROR: ", err);
       });
     }
   };
 });
-
+/*
 app.controller('postersController', function($scope, $http) {
   let url = '/get/posters';
 
