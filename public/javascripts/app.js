@@ -133,17 +133,17 @@ app.controller('tinderController', function($scope, $http) {
 // Controller for the final results page
 app.controller('finalController', function($scope, $http) {
 
-  // $scope.submitIds = function () {
-  //   $http({
-  //       url: '/final',
-  //       method: 'GET'
-  //   }).then(res => {
-  //       console.log(res.data);
-  //       $scope.recommendedMovies = res.data;
-  //   }).catch(err => {
-  //       console.log("Error: ", err);
-  //   });
-  // }
+  $scope.submitIds = function () {
+     $http({
+        url: '/final',
+        method: 'GET'
+     }).then(res => {
+         console.log(res.data);
+         $scope.recommendedMovies = res.data;
+     }).catch(err => {
+        console.log("Error: ", err);
+     });
+   }
 });
 
 
