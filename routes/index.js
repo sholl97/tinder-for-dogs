@@ -177,7 +177,7 @@ router.get('/:tinder', function(req, res) {
 
   } else {
     query =
-      `SELECT s.photo, sb.id, sb.breed
+      `SELECT s.photo, sb.id, ab.breed_name AS breed
     FROM stanford s
     JOIN stanford_breeds sb ON s.breed = sb.breed
     JOIN akc ON akc.id = sb.id
