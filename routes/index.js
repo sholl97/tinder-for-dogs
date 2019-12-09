@@ -116,7 +116,7 @@ router.get('/:tinder', function(req, res) {
   console.log("bad: ", req.session.badDogs);
   var query = '';
 
-  if(req.session.goodDogs || req.session.badDogs) {
+  if(req.session.goodDogs) {
     console.log("goodDogs AHHH: ", req.session.goodDogs);
     
 //TEST query
