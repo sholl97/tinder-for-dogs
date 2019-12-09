@@ -60,3 +60,10 @@ body {
   color: #bdc2cd;
 }
 
+.tindtext-link {
+  color: #474747;
+}
+
+.tindtext-link:hover {
+  color:#bdc2cd;
+}
