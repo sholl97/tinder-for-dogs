@@ -132,18 +132,36 @@ app.controller('tinderController', function($scope, $http) {
 
 // Controller for the final results page
 app.controller('finalController', function($scope, $http) {
+  console.log("We're in the final controller");
+     $http({
+        url: '/final/:final',
+        method: 'GET'
+     }).then(res => {
+         console.log(res.data);
+         $scope.finalDog = res.data;
+     }).catch(err => {
+        console.log("Error: ", err);
+     });
+  $scope.dogPhotos = function(dog) {
+    console.log(dog);
+    console.log(dog.breed_id);
+    var url = `/final/final/${dog.breed_id}`;
+    console.log("we calllling\n\n\n");
+    $http({
+      url: url,
+      method: 'GET'
+    }).then(res => {
+      console.log("Photos: ", res.data);
+      $scope.dogPhotos = res.data;
+      /*const pics = {};
+      res.data.forEach(e =>
+        pics.push('https://www.seas.upenn.edu/~hosa/cis550/' + dogs.photo))*/
+    }, err => {
+      console.log("Good Dog ERROR: ", err);
+    });
+    console.log("Good Dog End");
+  };
 
-  // $scope.submitIds = function () {
-  //   $http({
-  //       url: '/final',
-  //       method: 'GET'
-  //   }).then(res => {
-  //       console.log(res.data);
-  //       $scope.recommendedMovies = res.data;
-  //   }).catch(err => {
-  //       console.log("Error: ", err);
-  //   });
-  // }
 });
 
 
