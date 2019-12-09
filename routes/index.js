@@ -113,14 +113,101 @@ router.get('/genres/:genre', function (req, res) {
 
 
 router.get('/tinder/:tinder', function(req, res) {
-  console.log("start of tinder");
+  console.log("START OF TINDER");
+  console.log("good: ", req.session.goodDogs);
+  console.log("bad: ", req.session.badDogs);
+  var query = '';
 
-  var query =
-    `SELECT s.photo, sb.id, sb.breed
-    FROM stanford s
-    JOIN stanford_breeds sb ON s.breed = sb.breed
+  console.log("DEBUG\n\n");
+  ran = Math.random() * 10;
+  if(req.session.goodDogs){
+    len = req.session.goodDogs.length;
+  }
+  else{
+    len = 0
+  }
+  console.log(ran);
+  console.log(len);
+  if(req.session.goodDogs && ran <= len) {
+    console.log("we have goodDogs: ", req.session.goodDogs);
+    console.log("size: ", len);
+
+
+    query = `SELECT * FROM
+    (SELECT DISTINCT akc.id, (akc.weight_low + akc.weight_high)/2 AS weight_average
+      FROM akc JOIN stanford_breeds sb
+      ON akc.id = sb.id
+      JOIN stanford s
+      ON sb.breed = s.breed
+      WHERE sb.id IN (${req.session.goodDogs.join()})
+    ) t1
+    JOIN (
+    SELECT s.photo, sb.id, sb.breed, (akc.weight_low + akc.weight_high)/2 AS weight_average
+      FROM stanford s
+      JOIN stanford_breeds sb ON s.breed = sb.breed
+      JOIN akc ON akc.id = sb.id
+    ) t2
+    WHERE t1.weight_average BETWEEN t2.weight_average-5 AND t2.weight_average+5
     ORDER BY RAND()
     LIMIT 1;`;
+
+
+    //console.log("scary query: ", query);
+    
+/*
+    //CTE: for each breed liked, what is the average weight
+    query += `WITH breeds_liked AS (
+                SELECT (akc.weight_low + akc.weight_high)/2 AS weight_average
+                FROM akc
+                JOIN stanford_breeds sb ON akc.id = sb.id
+                JOIN stanford s ON sb.breed = s.breed
+                WHERE s.breed IN ${req.sessions.goodDogs.join(',')}
+              )`
+
+    //base query
+    query += `SELECT sb.id, sb.breed, s.photo
+              FROM stanford s
+              JOIN stanford_breeds sb ON s.breed = sb.breed
+              JOIN akc ON akc.id = sb.id
+              WHERE True`;
+
+    //where statements for good dogs
+    req.sessions.goodDogs.forEach(myFunction);
+    function myFunction(item) {
+      if(Math.random() < 0.8) {
+
+        query += `AND (akc.weight_low + akc.weight_high)/2 >= ALL(
+                    SELECT (akc2.weight_low + akc2.weight_high)/2 AS average_weight
+                    FROM akc akc2
+                    WHERE akc2.id = sb.id)  `
+      }
+    }*/
+
+    //where statements for bad dogs
+    //append where statement to the query
+    //list of breeds. for each thing in that breed, add a where statement
+
+  } else {
+    console.log("RANDOM GENERATIONNNNN")
+    query =
+      `SELECT s.photo, sb.id, ab.breed_name AS breed
+    FROM stanford s
+    JOIN stanford_breeds sb ON s.breed = sb.breed
+    JOIN akc ON akc.id = sb.id
+    JOIN aspca_breeds ab ON ab.id = akc.id
+    ORDER BY RAND()
+    LIMIT 1;`;
+  }
+  console.log("hello router");
+  console.log(query);
+  connection.query(query, function (err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+
     /*
   console.log("start of tinder");
 
@@ -135,14 +222,6 @@ router.get('/tinder/:tinder', function(req, res) {
     ORDER BY RAND()) AS T
     LIMIT 1;`;
 */
-  console.log("hello router");
-  connection.query(query, function (err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      console.log(rows);
-      res.json(rows);
-    }
-  });
 });
 
 //router for storing good dog

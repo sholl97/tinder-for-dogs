@@ -92,6 +92,7 @@ app.controller('tinderController', function($scope, $http) {
         $scope.end = true;
       } else {
         $scope.goodDog = res.data;
+        console.log("more dogs to go");
         $scope.end = false;
       }
     }, err => {
@@ -117,6 +118,7 @@ app.controller('tinderController', function($scope, $http) {
         $scope.end = true;
       } else {
         $scope.badDog = res.data;
+        console.log("more dogs to go");
         $scope.end = false;
       }
 
