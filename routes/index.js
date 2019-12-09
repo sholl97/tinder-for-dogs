@@ -117,36 +117,27 @@ router.get('/:tinder', function(req, res) {
   var query = '';
 
   if(req.session.goodDogs) {
-    console.log("goodDogs AHHH: ", req.session.goodDogs);
+    console.log("we have goodDogs: ", req.session.goodDogs);
     
-//TEST query
-//     query += `SELECT * FROM 
-// (SELECT DISTINCT (akc.weight_low + akc.weight_high)/2 AS weight_average
-// FROM akc JOIN stanford_breeds sb
-// ON akc.id = sb.id
-// JOIN stanford s
-// ON sb.breed = s.breed
-// WHERE sb.id IN (${req.session.goodDogs.join()})
-// ) T;`;
 
-    query = `
-    SELECT * FROM 
-(SELECT DISTINCT akc.id, (akc.weight_low + akc.weight_high)/2 AS weight_average
-  FROM akc JOIN stanford_breeds sb
-  ON akc.id = sb.id
-  JOIN stanford s
-  ON sb.breed = s.breed
-  WHERE sb.id IN (${req.session.goodDogs.join()})
-) t1
-JOIN (
-SELECT s.photo, sb.id, sb.breed, (akc.weight_low + akc.weight_high)/2 AS weight_average
-    FROM stanford s
-    JOIN stanford_breeds sb ON s.breed = sb.breed
-    JOIN akc ON akc.id = sb.id
-) t2
-WHERE t1.weight_average BETWEEN t2.weight_average-5 AND t2.weight_average+5
-ORDER BY RAND()
-LIMIT 1;`;
+
+    query = `SELECT * FROM 
+    (SELECT DISTINCT akc.id, (akc.weight_low + akc.weight_high)/2 AS weight_average
+      FROM akc JOIN stanford_breeds sb
+      ON akc.id = sb.id
+      JOIN stanford s
+      ON sb.breed = s.breed
+      WHERE sb.id IN (${req.session.goodDogs.join()})
+    ) t1
+    JOIN (
+    SELECT s.photo, sb.id, sb.breed, (akc.weight_low + akc.weight_high)/2 AS weight_average
+      FROM stanford s
+      JOIN stanford_breeds sb ON s.breed = sb.breed
+      JOIN akc ON akc.id = sb.id
+    ) t2
+    WHERE t1.weight_average BETWEEN t2.weight_average-5 AND t2.weight_average+5
+    ORDER BY RAND()
+    LIMIT 1;`;
 
 
     //console.log("scary query: ", query);
@@ -189,6 +180,8 @@ LIMIT 1;`;
       `SELECT s.photo, sb.id, sb.breed
     FROM stanford s
     JOIN stanford_breeds sb ON s.breed = sb.breed
+    JOIN akc ON akc.id = sb.id
+    JOIN aspca_breeds ab ON ab.id = akc.id
     ORDER BY RAND()
     LIMIT 1;`;
   }
