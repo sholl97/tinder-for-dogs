@@ -42,14 +42,16 @@ router.get('/tinder', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'tinder.html'));
 });
 
+
+router.get('/final', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'final.html'));
+});
+
 // router.get('/final', function(req, res) {
 //   res.sendFile(path.join(__dirname, '../', 'views', 'final.html'));
 // });
 
-/* ----- Q2 (Recommendations) ----- */
-router.get('/recommendations', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'recommendations.html'));
-});
+//////////////////
 
 /* ----- Q3 (Best Of Decades) ----- */
 router.get('/bestof', function(req, res) {
@@ -86,7 +88,7 @@ router.get('/dogs', function(req, res) {
   var query = `SELECT s.photo
     FROM stanford s
     ORDER BY RAND()
-    LIMIT 6;`;
+    LIMIT 12;`;
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
     else {
@@ -110,7 +112,7 @@ router.get('/genres/:genre', function (req, res) {
 });
 
 
-router.get('/:tinder', function(req, res) {
+router.get('/tinder/:tinder', function(req, res) {
   console.log("START OF TINDER");
   console.log("good: ", req.session.goodDogs);
   console.log("bad: ", req.session.badDogs);

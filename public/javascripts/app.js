@@ -55,7 +55,7 @@ app.controller('tinderController', function($scope, $http) {
 
   //display dog photo and breed
   $http({
-    url: '/:tinder',
+    url: '/tinder/:tinder',
     method: 'GET'
   }).then(res => {
     console.log("First Dog: ", res.data);
@@ -66,7 +66,7 @@ app.controller('tinderController', function($scope, $http) {
 
   $scope.nextDog = function() {
     $http({
-      url: '/:tinder',
+      url: '/tinder/:tinder',
       method: 'GET'
     }).then(res => {
       console.log("Next Dog: ", res.data);
@@ -130,23 +130,24 @@ app.controller('tinderController', function($scope, $http) {
 });
 
 
-/*/ Controller for the Recommendations Page
-app.controller('recommendationsController', function($scope, $http) {
+// Controller for the final results page
+app.controller('finalController', function($scope, $http) {
 
-  $scope.submitIds = function () {
-    $http({
-        url: '/recommend/' + $scope.movieName,
-        method: 'GET'
-    }).then(res => {
-        console.log(res.data);
-        $scope.recommendedMovies = res.data;
-    }).catch(err => {
-        console.log("Error: ", err);
-    });
-  }
+  // $scope.submitIds = function () {
+  //   $http({
+  //       url: '/final',
+  //       method: 'GET'
+  //   }).then(res => {
+  //       console.log(res.data);
+  //       $scope.recommendedMovies = res.data;
+  //   }).catch(err => {
+  //       console.log("Error: ", err);
+  //   });
+  // }
 });
 
-// Controller for the Best Of Page
+
+/*// Controller for the Best Of Page
 app.controller('bestofController', function($scope, $http) {
 
   $http({

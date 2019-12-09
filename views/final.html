@@ -5,16 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tinder for Dogs | Home</title>
+    <title>Tinder for Dogs | Result</title>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="javascripts/app.js" type="text/javascript"></script>
     <!-- Custom styles for this template-->
     <link href="/stylesheets/common.css" rel="stylesheet">
-    <link href="/stylesheets/dashboard.css" rel="stylesheet">
+    <!--<link href="/stylesheets/final.css" rel="stylesheet">-->
   </head>
 
-  <body ng-controller="dashboardController">
+  <!-- <body> -->
+  <body ng-controller="finalController">
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-tinder">
       <span class="navbar-brand">Tinder for Dogs<span class="badge badge-secondary" style="font-size: 0.5em; vertical-align: top;">Beta</span></span>
@@ -23,12 +24,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav item nav-link active" href="/">Home</a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="/tinder">Tinder</a>
+            <a class="nav-link" href="/">Home</a>
           </li>
+          <li class="nav-item active">
+            <a class="nav item nav-link active">Tinder</a>
+          </li>
+
         </ul>
         <span class="navbar-text">Adopting in: <strong>Austin, TX</strong></span>
       </div>
@@ -36,13 +38,13 @@
     <br>
 
     <!-- DOG GRID -->
-    <div class="container bg-tinder rounded-top">
+    <!--<div class="container bg-tinder rounded-top">
         <div class="dogs-container">
           <div class="dogs" ng-repeat="dog in dogs">
             <img class="cover" src= "{{dog.photo}}" alt="Image" style="width:350px;height:350px;"/>
           </div>
         </div>
-    </div>
+    </div>-->
     <br>
 
     <!-- OVERVIEW -->
