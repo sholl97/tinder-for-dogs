@@ -291,7 +291,7 @@ router.get('/tinder/bad/:dog', function (req, res) {
 
 
 router.get('/guesser/:guesser', function (req, res) {
-  var query = `SELECT DISTINCT color_1 as color FROM shelter_dogs`
+  var query = `SELECT DISTINCT color_1 as color FROM shelter_dogs ORDER BY color`
 //   var inputDecade = req.params.decade;
 //   // TODO: Part (2) - Edit query below
 //   var query = `WITH best as (SELECT genre, max(vote_count) as voters
