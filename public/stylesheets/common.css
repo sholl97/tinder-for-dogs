@@ -1,5 +1,6 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 15px sans-serif;
+  font-weight: 1000;
   background: url('./../assets/bg.jpg') center center no-repeat fixed;
   height: 100vh;
   width: 100vw;
