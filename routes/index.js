@@ -44,6 +44,7 @@ router.get('/tinder', function(req, res) {
 
 
 router.get('/final', function(req, res) {
+  console.log("we request the FINAL");
   res.sendFile(path.join(__dirname, '../', 'views', 'final.html'));
 });
 
@@ -280,7 +281,7 @@ router.get('/guesser/:guesser', function (req, res) {
 });
 
 
-router.get('/guesser/:color/:weight/:height', function (req, res) {    
+router.get('/guesser/:color/:weight/:height', function (req, res) {
   var query = `SELECT DISTINCT ab.breed_name AS breed
     FROM stanford s
     JOIN stanford_breeds sb ON s.breed = sb.breed
@@ -300,37 +301,54 @@ router.get('/guesser/:color/:weight/:height', function (req, res) {
   });
 });
 
-router.get('/final', function(req, res) {
-  var query = `SELECT pet_id, name, sd.breed, color, sd.sex, sd.age FROM (SELECT * FROM (SELECT * FROM (SELECT breed_id FROM breed_freq
+router.get('/final/:final', function(req, res) {
+  console.log('HELLO DARKNESS MY OLD FRIEND\n\n');
+  var query = `SELECT pet_id, name, sd.breed, breed_id, color, sd.sex, sd.age FROM (SELECT * FROM (SELECT * FROM (SELECT breed_id FROM breed_freq
 WHERE(weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
-WHERE breed_id IN ${req.session.goodDogs.join()})b) <= 10 AND 
+WHERE breed_id IN (${req.session.goodDogs.join()}))b) <= 10 AND
 weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
-WHERE breed_id IN ${req.session.goodDogs.join()})b) >= -10))weighted_breeds_good
+WHERE breed_id IN (${req.session.goodDogs.join()}))b) >= -10))weighted_breeds_good
 WHERE breed_id NOT IN
 (SELECT breed_id FROM breed_freq
 WHERE(weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
-WHERE breed_id IN ${req.session.badDogs.join()})b) <= 5 AND 
+WHERE breed_id IN (${req.session.badDogs.join()}))b) <= 5 AND
 weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
-WHERE breed_id IN ${req.session.badDogs.join()})b) >= -5)))a
+WHERE breed_id IN (${req.session.badDogs.join()}))b) >= -5)))a
 NATURAL JOIN sd_final
 WHERE color_1 NOT IN (SELECT color FROM(
 SELECT bc.color, (bc.count  - IFNULL(gc.count,0)) AS final_count FROM
 (SELECT COUNT(*) AS count, color FROM breed_freq
-WHERE breed_id IN ${req.session.badDogs.join()} GROUP BY color)bc LEFT JOIN 
+WHERE breed_id IN (${req.session.badDogs.join()}) GROUP BY color)bc LEFT JOIN
 (SELECT COUNT(*) AS count, color FROM breed_freq
-WHERE breed_id IN ${req.session.goodDogs.join()} GROUP BY color)gc
+WHERE breed_id IN (${req.session.goodDogs.join()}) GROUP BY color)gc
 ON bc.color = gc.color)tmp
 WHERE final_count > 0)
 AND color_2 NOT IN (SELECT color FROM(
 SELECT bc.color, (bc.count  - IFNULL(gc.count,0)) AS final_count FROM
 (SELECT COUNT(*) AS count, color FROM breed_freq
-WHERE breed_id IN ${req.session.badDogs.join()} GROUP BY color)bc LEFT JOIN 
+WHERE breed_id IN (${req.session.badDogs.join()}) GROUP BY color)bc LEFT JOIN
 (SELECT COUNT(*) AS count, color FROM breed_freq
-WHERE breed_id IN ${req.session.goodDogs.join()} GROUP BY color)gc
+WHERE breed_id IN (${req.session.goodDogs.join()}) GROUP BY color)gc
 ON bc.color = gc.color)tmp
 WHERE final_count > 0)
 ORDER BY RAND()
 LIMIT 1)final JOIN shelter_dogs sd ON final.pet_id = sd.id;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
+
+router.get('/final/final/:breed_id', function(req, res) {
+  console.log("getting the PHOTOS");
+  var query = `SELECT s.photo
+  FROM stanford s
+  JOIN stanford_breeds sb ON s.breed = sb.breed
+  WHERE sb.id = ${req.params.breed_id}
+  LIMIT 24;`;
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
     else {

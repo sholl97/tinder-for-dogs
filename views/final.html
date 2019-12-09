@@ -59,12 +59,30 @@
     <br>
 
     <!-- OVERVIEW -->
-    <div class="container bg-tinder rounded-bottom" style="padding-top: 2rem; padding-bottom: 20px;">
-      <h2 class=tindtext-dark>Hello</h2>
-      <p>Maybe some overview text here.</p>
+    <div class="container bg-tinder rounded-bottom" style="padding-top: 2rem; padding-bottom: 20px;" ng-repeat="dog in finalDog">
+      <h2 class=tindtext-dark>We've found you a dog!</h2>
+      <p>Name: {{dog.name}}</p>
+      <p>Breed: {{dog.breed}}</p>
+      <p>Sex: {{dog.sex}}</p>
+      <!-- Penultimate button -->
+        <div>
+          <a ng-click="dogPhotos(dog)" class="btn btn-lg btn-block" style="background-color: #fb526b; color:white;">Show dogs that look like mine!</a>
+        </div>
     </div>
     <br>
-    
+
+
+
+    <!-- DOG GRID -->
+    <div class="container bg-tinder rounded-bottom">
+        <div class="dogs-container">
+          <div class="dogs" ng-repeat="dog in dogPhotos">
+            <img class="cover" src= "https://www.seas.upenn.edu/~hosa/cis550/{{dog.photo}}" alt="Image" style="width:350px;height:350px;"/>
+          </div>
+        </div>
+    </div>
+    <br>
+
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
