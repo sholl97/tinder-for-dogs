@@ -244,6 +244,7 @@ router.get('/final/final/:breed_id', function(req, res) {
   FROM stanford s
   JOIN stanford_breeds sb ON s.breed = sb.breed
   WHERE sb.id = ${req.params.breed_id}
+  ORDER BY RAND()
   LIMIT 24;`;
   
   //execute the query
