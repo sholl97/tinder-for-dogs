@@ -53,7 +53,7 @@
         <div class="dogs-container">
           <div class="dog" ng-repeat="d in tinder" ng-if="!end">
             <img class="center" src="https://www.seas.upenn.edu/~hosa/cis550/{{d.photo}}" alt="{{d.breed_1}}">
-            <p class="breed">{{d.breed}}</p>
+            <br>
             <a class="btn btn-lg btn-block" ng-click="badDog(d); nextDog()" style="background-color: #fb526b; color:white;">&#x2B05; No</a>
             <a class="btn btn-lg btn-block" ng-click="goodDog(d); nextDog()" style="background-color: #fb526b; color:white;">Yes &#x27A1;</a>
           </div>

@@ -200,6 +200,9 @@ router.get('/tinder/good/:dog', function (req, res) {
       console.log("Initialized good for the first time: " + req.session.goodDogs);
   }
   if(req.session.goodDogs.length > 9 || req.session.goodDogs.length + req.session.badDogs.length > 9){
+    if(req.session.goodDogs.length > 9){
+      req.session.badDogs = [0];
+    }
     console.log("Hey look ma we made it");
     res.json(true);
   }
@@ -230,18 +233,9 @@ router.get('/tinder/bad/:dog', function (req, res) {
 
   //redirect when 10 swipes are hit
   if(req.session.badDogs.length > 9 || req.session.goodDogs.length + req.session.badDogs.length > 9) {
-    console.log("Hey look ma we made it");
-    res.json(true);
-
-    // $http({
-    //   url: '/',
-    //   method: 'GET'
-    // }).then(res => {
-    //   console.log("redirect attempt");
-
-    // }, err => {
-    //   console.log("Redirect err", err);
-    // });
+    if(req.session.goodDogs){
+      res.json(true);
+    }
   }
   console.log("end ", req.session.badDogs);
 
