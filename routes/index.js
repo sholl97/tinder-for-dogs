@@ -48,6 +48,11 @@ router.get('/dogs', function(req, res) {
     FROM stanford s
     ORDER BY RAND()
     LIMIT 12;`;
+  
+  //reset dog lists for a new swiping session
+  req.session.goodDogs = null;
+  req.session.badDogs = null;
+
   connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
     else {
