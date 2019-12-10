@@ -188,7 +188,7 @@ router.get('/guesser/:color/:weight/:height', function (req, res) {
     JOIN aspca_breeds ab ON ab.id = akc.id
     JOIN breed_freq bf ON bf.breed_id = akc.id
  WHERE akc.height_low < ${req.params.height} + 10 AND akc.height_high > ${req.params.height} - 10
- AND akc.weight_low < ${req.params.weight} + 10 AND akc.weight_low > ${req.params.weight} - 10
+ AND akc.weight_low < ${req.params.weight} + 10 AND akc.weight_high > ${req.params.weight} - 10
  AND bf.color = '${req.params.color}';`
  console.log(query);
   connection.query(query, function (err, rows, fields) {
