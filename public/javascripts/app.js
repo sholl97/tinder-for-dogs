@@ -77,7 +77,6 @@ app.controller('tinderController', function($scope, $http) {
     }, err => {
       console.log("Good Dog ERROR: ", err);
     });
-    console.log("Good Dog End");
   };
 
   //If user dislikes the dog
@@ -145,7 +144,6 @@ app.controller('guesserController', function($scope, $http) {
   //When submit button is pressed
   $scope.submit = function() {
     var url = `/guesser/${$scope.selectedColor.color}/${$scope.selectedWeight}/${$scope.selectedHeight}`;
-    console.log(url);
     if ($scope.selectedColor !== "") {
       $http({
         url: url,
