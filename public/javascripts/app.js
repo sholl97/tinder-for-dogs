@@ -104,7 +104,6 @@ app.controller('finalController', function($scope, $http) {
     }, err => {
       console.log("Good Dog ERROR: ", err);
     });
-    console.log("Good Dog End");
   };
 });
 
