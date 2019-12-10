@@ -98,3 +98,10 @@ body {
   width: 100%;
   text-align: center;
 }
+
+.image-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
