@@ -202,36 +202,42 @@ router.get('/guesser/:color/:weight/:height', function (req, res) {
 
 //to get the final dog 
 router.get('/final/:final', function(req, res) {
-  var query = `SELECT pet_id, name, sd.breed, breed_id, color, sd.sex, sd.age FROM (SELECT * FROM (SELECT * FROM (SELECT breed_id FROM breed_freq
-WHERE(weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
-WHERE breed_id IN (${req.session.goodDogs.join()}))b) <= 10 AND
-weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
-WHERE breed_id IN (${req.session.goodDogs.join()}))b) >= -10))weighted_breeds_good
-WHERE breed_id NOT IN
-(SELECT breed_id FROM breed_freq
-WHERE(weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
-WHERE breed_id IN (${req.session.badDogs.join()}))b) <= 5 AND
-weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
-WHERE breed_id IN (${req.session.badDogs.join()}))b) >= -5)))a
+  var query = `SSELECT pet_id, name, sd.breed, breed_id, color, sd.sex, sd.age FROM 
+(SELECT * 
+FROM (SELECT * 
+FROM (SELECT breed_id 
+FROM breed_freq
+WHERE(weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg 
+FROM breed_freq WHERE breed_id IN (${req.session.goodDogs.join()}))avg_of_weights_liked) <= 10 
+AND weight_avg - (SELECT AVG(weight_avg) FROM (SELECT weight_avg FROM breed_freq
+WHERE breed_id IN (${req.session.goodDogs.join()}))avg_of_weights_liked) >= -10))weighted_breeds_good
+WHERE breed_id NOT IN (SELECT breed_id FROM breed_freq
+WHERE(weight_avg - (SELECT AVG(weight_avg) 
+FROM (SELECT weight_avg FROM breed_freq
+WHERE breed_id IN (${req.session.badDogs.join()}))avg_of_weights_disliked) <= 5 
+AND weight_avg - (SELECT AVG(weight_avg) FROM 
+(SELECT weight_avg FROM breed_freq
+WHERE breed_id IN (${req.session.badDogs.join()}))avg_of_weights_disliked) >= -5)))weighted_dogs
 NATURAL JOIN sd_final
 WHERE color_1 NOT IN (SELECT color FROM(
-SELECT bc.color, (bc.count  - IFNULL(gc.count,0)) AS final_count FROM
+SELECT bad_colors.color, (bad_colors.count  - IFNULL(good_colors.count,0)) AS final_count FROM
 (SELECT COUNT(*) AS count, color FROM breed_freq
-WHERE breed_id IN (${req.session.badDogs.join()}) GROUP BY color)bc LEFT JOIN
+WHERE breed_id IN (${req.session.badDogs.join()}) GROUP BY color)bad_colors LEFT JOIN
 (SELECT COUNT(*) AS count, color FROM breed_freq
-WHERE breed_id IN (${req.session.goodDogs.join()}) GROUP BY color)gc
-ON bc.color = gc.color)tmp
+WHERE breed_id IN (${req.session.goodDogs.join()}) GROUP BY color)good_colors
+ON bad_colors.color = good_colors.color)color_1_check
 WHERE final_count > 0)
 AND color_2 NOT IN (SELECT color FROM(
-SELECT bc.color, (bc.count  - IFNULL(gc.count,0)) AS final_count FROM
+SELECT bad_colors.color, (bad_colors.count  - IFNULL(good_colors.count,0)) AS final_count FROM
 (SELECT COUNT(*) AS count, color FROM breed_freq
-WHERE breed_id IN (${req.session.badDogs.join()}) GROUP BY color)bc LEFT JOIN
+WHERE breed_id IN (${req.session.badDogs.join()}) GROUP BY color)bad_colors LEFT JOIN
 (SELECT COUNT(*) AS count, color FROM breed_freq
-WHERE breed_id IN (${req.session.goodDogs.join()}) GROUP BY color)gc
-ON bc.color = gc.color)tmp
+WHERE breed_id IN (${req.session.goodDogs.join()}) GROUP BY color)good_colors
+ON bad_colors.color = good_colors.color)color_2_check
 WHERE final_count > 0)
 ORDER BY RAND()
-LIMIT 1)final JOIN shelter_dogs sd ON final.pet_id = sd.id;`;
+LIMIT 1)final 
+JOIN shelter_dogs sd ON final.pet_id = sd.id;`
   
   //execute the query
   connection.query(query, function (err, rows, fields) {
