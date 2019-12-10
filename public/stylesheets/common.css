@@ -27,11 +27,6 @@ body {
   box-sizing: border-box;
 }
 
-.dogs-container .dog:hover {
-  background-color: #ddd;
-}
-
-
 .cover {
   padding: 20px;
   object-fit: cover;
@@ -102,4 +97,11 @@ body {
   bottom: 0;
   width: 100%;
   text-align: center;
+}
+
+.image-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
