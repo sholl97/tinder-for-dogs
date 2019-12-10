@@ -202,7 +202,7 @@ router.get('/guesser/:color/:weight/:height', function (req, res) {
 
 //to get the final dog 
 router.get('/final/:final', function(req, res) {
-  var query = `SSELECT pet_id, name, sd.breed, breed_id, color, sd.sex, sd.age FROM 
+  var query = `SELECT pet_id, name, sd.breed, breed_id, color, sd.sex, sd.age FROM 
 (SELECT * 
 FROM (SELECT * 
 FROM (SELECT breed_id 
